@@ -11,9 +11,10 @@ RS5/proto/**/*.gen/**
 RS5/proto/**/*.ip_user_files/**
 RS5/synthesis/**
 
-butterfly_edited_old/**
-Butterfly_test_old/**
-coverage_2001/**
+butterfly_edited_old/
+Butterfly_test_old/
+coverage_2001/
+versatile_fft/
 
 32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/.Xil/*
 32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/fft_dev/*
