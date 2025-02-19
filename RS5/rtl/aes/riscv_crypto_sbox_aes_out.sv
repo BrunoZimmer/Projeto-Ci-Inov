@@ -32,6 +32,8 @@
 
 //
 //    bottom (outer) linear layer for AES
+    timeunit 1ns; timeprecision 1ns;
+    
 module riscv_crypto_sbox_aes_out (
     input   [17:0] x,
     output  [ 7:0] y

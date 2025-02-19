@@ -1,3 +1,5 @@
+
+timeunit 1ns; timeprecision 1ns;
 module riscv_crypto_aes_sbox (
     output [7:0] fx,
     input  [7:0] in

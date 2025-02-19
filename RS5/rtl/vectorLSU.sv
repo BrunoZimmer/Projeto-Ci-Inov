@@ -1,5 +1,6 @@
 `include "RS5_pkg.sv"
 
+    timeunit 1ns; timeprecision 1ns;
 /* verilator lint_off WIDTHTRUNC */
 module vectorLSU
     import RS5_pkg::*;

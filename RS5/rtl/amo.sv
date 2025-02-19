@@ -1,3 +1,6 @@
+
+timeunit 1ns; timeprecision 1ns;
+
 module amo
 (
     input  logic        clk,

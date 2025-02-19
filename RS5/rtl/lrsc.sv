@@ -1,3 +1,6 @@
+
+
+timeunit 1ns; timeprecision 1ns;
 module lrsc
 (
     input  logic        clk,

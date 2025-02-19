@@ -32,6 +32,8 @@
 
 //
 //    The shared non-linear middle part for AES, AES^-1, and SM4.
+
+timeunit 1ns; timeprecision 1ns;
 module riscv_crypto_sbox_inv_mid (
     input   [20:0] x,
     output  [17:0] y

@@ -1,3 +1,5 @@
+
+timeunit 1ns; timeprecision 1ns;
 module mulNbits
 #(
     parameter int N = 8

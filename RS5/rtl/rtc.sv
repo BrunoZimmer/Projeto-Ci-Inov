@@ -15,6 +15,7 @@
  *
  */
 
+ timeunit 1ns; timeprecision 1ns;
 module rtc (
     input  logic        clk,
     input  logic        reset_n,

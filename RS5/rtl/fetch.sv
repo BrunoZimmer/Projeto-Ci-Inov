@@ -18,6 +18,7 @@
  * on a new clock cycle or is replaced by a new address in case of a branch. 
  */
 
+ timeunit 1ns; timeprecision 1ns;
 module fetch  #(
     parameter     start_address = 32'b0,
     parameter bit COMPRESSED    = 1'b0,
