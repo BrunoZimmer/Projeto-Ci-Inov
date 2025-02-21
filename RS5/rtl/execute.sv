@@ -74,8 +74,8 @@ module execute
     output  logic               write_enable_fwd_o,
     output  iType_e             instruction_operation_o,
     output  logic   [31:0]      result_o,
-    // output  logic   [31:0]      accel_input,
-    // output  logic               accel_en,
+    output  logic   [31:0]      accel_input,
+    output  logic               accel_en,
     output  logic   [31:0]      result_fwd_o,
     output  logic   [ 4:0]      rd_o,
 
@@ -140,18 +140,20 @@ module execute
 
 // logic [31:0] accel_input; // transformar em um output
 // logic        accel_en; 
-// // Enable para dar o output e dizer que tem um dado para acelerador
-// always_comb begin
-//     unique case (instruction_operation_i)
-//         // To link register. Maybe we can remove this by using the PC in decode stage
-//         BUTT_ACC: 
-//             accel_input = out_butterfly;
-//             accel_en = 1'b1;
-//         default:   
-//             accel_input = 32'b0;
-//             accel_input = 1'b0;
-//     endcase
-// end
+// Enable para dar o output e dizer que tem um dado para acelerador
+always_comb begin
+    unique case (instruction_operation_i)
+        // To link register. Maybe we can remove this by using the PC in decode stage
+        BUTT_ACC: begin
+            accel_input = rs1_data_i;
+            accel_en = 1'b1;
+        end
+        default:  begin 
+            accel_input = 32'b0;
+            accel_input = 1'b0;
+        end
+    endcase
+end
 
 //////////////////////////////////////////////////////////////////////////////
 // ALU
