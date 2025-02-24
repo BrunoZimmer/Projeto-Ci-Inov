@@ -144,7 +144,7 @@ module execute
 always_comb begin
     unique case (instruction_operation_i)
         // To link register. Maybe we can remove this by using the PC in decode stage
-        BUTT_ACC: begin
+        FFT_ACC: begin
             accel_input = rs1_data_i;
             accel_en = 1'b1;
         end
