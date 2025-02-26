@@ -149,8 +149,8 @@ always_comb begin
             accel_en = 1'b1;
         end
         default:  begin 
-            accel_input = 32'b0;
-            accel_input = 1'b0;
+            accel_input = rs1_data_i;
+            accel_en = 1'b1;
         end
     endcase
 end
@@ -434,35 +434,53 @@ end
         assign rem_result       = '0;
     end
 
+// //////////////////////////////////////////////////////////////////////////////
+// // AES
+// //////////////////////////////////////////////////////////////////////////////
+
+//     logic [31:0] aes_result;
+
+//     if (ZKNEEnable) begin: zkne_gen_on
+//         logic aes_mix;
+//         logic aes_valid;
+
+//         assign aes_mix = (instruction_operation_i == AES32ESMI);
+//         assign aes_valid = (instruction_operation_i inside {AES32ESMI, AES32ESI});
+
+//         aes_unit #(
+//             .Environment (Environment),
+//             .LOGIC_GATING(1'b1)  // Gate sub-module inputs to save toggling
+//         ) u_aes_unit (
+//             .rs1_in   (rs1_data_i),           // Source register 1
+//             .rs2_in   (rs2_data_i),           // Source register 2
+//             .bs_in    (instruction_i[31:30]), // Byte select immediate
+//             .mix_in   (aes_mix),              // SubBytes + MixColumn or just SubBytes
+//             .valid_in (aes_valid),            // Are the inputs valid?
+//             .rd_out   (aes_result)            // Output destination register value
+//         );
+//     end
+//     else begin : zkne_gen_off
+//         assign aes_result = '0;
+//     end
+
+    
 //////////////////////////////////////////////////////////////////////////////
-// AES
+// FFT
 //////////////////////////////////////////////////////////////////////////////
 
-    logic [31:0] aes_result;
+    logic [31:0] fft_result;
 
     if (ZKNEEnable) begin: zkne_gen_on
-        logic aes_mix;
-        logic aes_valid;
+        logic fft_mix;
+        logic fft_valid;
 
-        assign aes_mix = (instruction_operation_i == AES32ESMI);
-        assign aes_valid = (instruction_operation_i inside {AES32ESMI, AES32ESI});
+        assign fft_mix = (instruction_operation_i == FFT_ACC);
+        assign fft_valid = (instruction_operation_i == FFT_ACC);
 
-        aes_unit #(
-            .Environment (Environment),
-            .LOGIC_GATING(1'b1)  // Gate sub-module inputs to save toggling
-        ) u_aes_unit (
-            .rs1_in   (rs1_data_i),           // Source register 1
-            .rs2_in   (rs2_data_i),           // Source register 2
-            .bs_in    (instruction_i[31:30]), // Byte select immediate
-            .mix_in   (aes_mix),              // SubBytes + MixColumn or just SubBytes
-            .valid_in (aes_valid),            // Are the inputs valid?
-            .rd_out   (aes_result)            // Output destination register value
-        );
     end
     else begin : zkne_gen_off
-        assign aes_result = '0;
+        assign fft_result = '0;
     end
-
 //////////////////////////////////////////////////////////////////////////////
 // Vector Extension
 //////////////////////////////////////////////////////////////////////////////
@@ -655,7 +673,8 @@ end
             DIV,DIVU:               result = div_result;
             REM,REMU:               result = rem_result;
             MUL,MULH,MULHU,MULHSU:  result = mul_result;
-            AES32ESI, AES32ESMI:    result = aes_result;
+            // AES32ESI, AES32ESMI:    result = aes_result;
+            FFT_ACC:                result = fft_result;
             VECTOR, VLOAD, VSTORE:  result = vector_scalar_result;
             default:                result = sum_result;
         endcase

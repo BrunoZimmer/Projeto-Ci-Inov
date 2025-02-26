@@ -41,9 +41,9 @@ int main()
 
     res = a+b;
 
-    // __asm__ (
-    //     "fft_acc 1, 2, 3"
-    // );
+    __asm__ __volatile__(
+        "fft_acc"
+    );
 
     printf("resultado: %d", res);
 

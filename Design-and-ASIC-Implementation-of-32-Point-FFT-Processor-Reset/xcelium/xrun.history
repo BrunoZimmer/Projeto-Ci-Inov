@@ -30,3 +30,4 @@ s29(20Feb2025:14:02:16):  xrun -lwdgen -access rwc -f file_list.f +UVM_VERBOSITY
 s30(20Feb2025:15:52:26):  xrun -lwdgen -access rwc -f file_list.f +UVM_VERBOSITY=UVM_MEDIUM -gui -ALLOWREDEFINITION 
 s31(20Feb2025:15:58:05):  xrun -lwdgen -access rwc -f file_list.f +UVM_VERBOSITY=UVM_MEDIUM -gui -ALLOWREDEFINITION 
 s32(21Feb2025:07:47:06):  xrun -lwdgen -access rwc -f file_list.f +UVM_VERBOSITY=UVM_MEDIUM -gui -ALLOWREDEFINITION 
+s33(24Feb2025:14:06:32):  xrun -lwdgen -access rwc -f file_list.f +UVM_VERBOSITY=UVM_MEDIUM -gui -ALLOWREDEFINITION 
