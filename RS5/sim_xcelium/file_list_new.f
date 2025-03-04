@@ -33,7 +33,6 @@ $(CURRENT_PATH)/../rtl/vectorCSRs.sv
 $(CURRENT_PATH)/../rtl/vectorLSU.sv 
 $(CURRENT_PATH)/../rtl/vectorRegbank.sv 
 $(CURRENT_PATH)/../rtl/vectorUnit.sv 
-// $(CURRENT_PATH)/../rtl/top.sv
 
 
 $(CURRENT_PATH)/../rtl/fft_acc/ROM_2.v
@@ -50,4 +49,5 @@ $(CURRENT_PATH)/../rtl/fft_acc/FFT.v
 
 
 $(CURRENT_PATH)/../sim/RAM_mem.sv
+$(CURRENT_PATH)/../sim/RAM_mem_16b.sv
 $(CURRENT_PATH)/../sim/testbench_new.sv

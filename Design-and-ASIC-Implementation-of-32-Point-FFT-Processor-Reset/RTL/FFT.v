@@ -287,7 +287,7 @@ module FFT(
 				result_r[i] <= result_r_ns[i];
 				result_i[i] <= result_i_ns[i];
 			end
-			$display("Valor de result_r %0d", result_r[i]);
+			// $display("Valor de result_r %0d", result_r[i]);
 		end
 	end
 	always@(*)begin

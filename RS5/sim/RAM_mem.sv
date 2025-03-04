@@ -29,12 +29,14 @@ module RAM_mem
     parameter string DEBUG_PATH = "./debug/",
 `endif
     parameter int    MEM_WIDTH  = 65536,
-    parameter string BIN_FILE   = "../app/berkeley_suite/test.bin"
+    parameter int    WORD_WIDTH  = 8,
+    parameter string BIN_FILE   = "../app/fft_test/fft_test.bin"
 )
 (
     input  logic                             clk,
 
     input  logic                             enA_i,
+    input  logic                             file_weA_i,
     input  logic [ 3:0]                      weA_i,
     input  logic [($clog2(MEM_WIDTH) - 1):0] addrA_i,
     input  logic [31:0]                      dataA_i,
@@ -47,7 +49,11 @@ module RAM_mem
     output logic [31:0]                      dataB_o
 );
 
-    reg [7:0] RAM [0:MEM_WIDTH-1];
+    reg [WORD_WIDTH-1:0] RAM [0:MEM_WIDTH-1];
+    int i;
+    int res;
+    int value;
+
     int fd;
 `ifndef SYNTH
     int fd_r_a, fd_r_b, fd_w_a, fd_w_b;
@@ -59,8 +65,11 @@ module RAM_mem
             $display("[%d] [RAM_mem] ERROR: %s not found.", $time(), BIN_FILE);
             $finish();
         end
-
+        
         void'($fread(RAM, fd));
+        $display("%S", BIN_FILE);
+        $display("%d", fd);
+
 
     `ifndef SYNTH
         if (DEBUG) begin
@@ -114,7 +123,9 @@ module RAM_mem
             end
             if (weB_i[0] == 1'b1) begin                                 // Store Byte(1 byte)
                 RAM[addrB_i]   <= dataB_i[7:0];
+                
             end
+            
 
         `ifndef SYNTH
             if (DEBUG) begin

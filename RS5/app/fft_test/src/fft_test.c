@@ -1,51 +1,50 @@
-// #define PRINTI (*((volatile unsigned int*)0x80002000))
-
-// int fibonacci(int n)
-// {
-//     if (n <= 1)
-//         return n;
-
-//     int current = 0;
-//     int prev1   = 1;
-//     int prev2   = 0;
-
-//     for (int i = 2; i <= n; i++) {
-//         __asm__ (
-//             "add %0, %1, %2\n"
-//             "mv  %2, %1\n"
-//             "mv  %1, %0\n"
-//             : "+r"(current), "+r"(prev1), "+r"(prev2)
-//             :
-//             :
-//         );
-//     }
-
-//     return current;
-// }
-
-// int main()
-// {
-//     volatile int value = 2;
-//     int ret = fibonacci(value);
-//     PRINTI = ret;
-//     return 0;
-// }
 #include <stdio.h>
+#include <stdlib.h>
 
-int main()
-{
-    int a = 1;
-    int b = 2;
+#define NUM_OPERACOES 32
 
-    int res = 0;
-
-    res = a+b;
-
-    __asm__ __volatile__(
-        "fft_acc"
+int main() {
+    // Open input files
+    printf("Entrei");
+    // Now do 32 uninterrupted operations
+    __asm__ __volatile__ (
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        :
+        :
+        : "t0", "t1", "t2", "t3", "t4", "s0", "s1", "s2", "s3", "s4" // Clobbered registers
     );
-
-    printf("resultado: %d", res);
 
     return 0;
 }
+

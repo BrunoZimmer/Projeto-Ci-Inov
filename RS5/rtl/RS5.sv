@@ -26,9 +26,9 @@
  #(
  `ifndef SYNTH
      parameter bit           DEBUG          = 1'b0,
-     parameter string        DBG_REG_FILE   = "./debug/regBank.txt",
+     parameter string        DBG_REG_FILE   = "../sim/debug/regBank.txt",
      parameter bit           PROFILING      = 1'b0,
-     parameter string        PROFILING_FILE = "./debug/Report.txt",
+     parameter string        PROFILING_FILE = "../sim/debug/Report.txt",
  `endif
      parameter environment_e Environment    = ASIC,
      parameter mul_e         MULEXT         = MUL_M,

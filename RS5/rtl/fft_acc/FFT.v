@@ -253,211 +253,211 @@ module FFT(
 		.dout_i(shift_1_dout_i)
 	);
 
-	// always@(posedge clk or posedge reset)begin
-	// 	if(reset)begin
-	// 		din_r_reg <= 0;
-	// 		din_i_reg <= 0;
-	// 		in_valid_reg <= 0;
-	// 		s5_count <= 0;
-	// 		r4_valid <= 0;
-	// 		count_y <= 0;
-	// 		assign_out <= 0;
-	// 		over <= 0;
-	// 		dout_r <= 0;
-	// 		dout_i <= 0;
-	// 		y_1_delay <= 0;
-	// 		for (i=0;i<=31;i=i+1) begin
-	// 			result_r[i] <= 0;
-	// 			result_i[i] <= 0;
-	// 		end
-	// 	end
-	// 	else begin
-	// 		din_r_reg <= {{4{din_r[11]}},din_r,8'b0};
-	// 		din_i_reg <= {{4{din_i[11]}},din_i,8'b0};
-	// 		in_valid_reg <= in_valid;
-	// 		s5_count <= next_s5_count;
-	// 		r4_valid <= next_r4_valid;
-	// 		count_y  <= next_count_y;
-	// 		assign_out <= next_out_valid;
-	// 		over <= next_over;
-	// 		y_1_delay <= y_1;
-	// 		dout_r <= next_dout_r;
-	// 		dout_i <= next_dout_i;
-	// 		for (i=0;i<=31;i=i+1) begin
-	// 			result_r[i] <= result_r_ns[i];
-	// 			result_i[i] <= result_i_ns[i];
-	// 		end
-	// 		$display("Valor de result_r %0d", result_r[i]);
-	// 	end
-	// end
-	// always@(*)begin
+	always@(posedge clk or posedge reset)begin
+		if(reset)begin
+			din_r_reg <= 0;
+			din_i_reg <= 0;
+			in_valid_reg <= 0;
+			s5_count <= 0;
+			r4_valid <= 0;
+			count_y <= 0;
+			assign_out <= 0;
+			over <= 0;
+			dout_r <= 0;
+			dout_i <= 0;
+			y_1_delay <= 0;
+			for (i=0;i<=31;i=i+1) begin
+				result_r[i] <= 0;
+				result_i[i] <= 0;
+			end
+		end
+		else begin
+			din_r_reg <= {{4{din_r[11]}},din_r,8'b0};
+			din_i_reg <= {{4{din_i[11]}},din_i,8'b0};
+			in_valid_reg <= in_valid;
+			s5_count <= next_s5_count;
+			r4_valid <= next_r4_valid;
+			count_y  <= next_count_y;
+			assign_out <= next_out_valid;
+			over <= next_over;
+			y_1_delay <= y_1;
+			dout_r <= next_dout_r;
+			dout_i <= next_dout_i;
+			for (i=0;i<=31;i=i+1) begin
+				result_r[i] <= result_r_ns[i];
+				result_i[i] <= result_i_ns[i];
+			end
+			// $display("Valor de result_r %0d", result_r[i]);
+		end
+	end
+	always@(*)begin
 
-	// 	next_r4_valid = radix_no4_outvalid;
-	// 	if (r4_valid)next_s5_count = s5_count + 1;
-	// 	else next_s5_count = s5_count;
+		next_r4_valid = radix_no4_outvalid;
+		if (r4_valid)next_s5_count = s5_count + 1;
+		else next_s5_count = s5_count;
 		
-	// 	if(r4_valid && s5_count == 1'b0)no5_state = 2'b01;
-	// 	else if(r4_valid && s5_count == 1'b1)no5_state = 2'b10;
-	// 	else no5_state = 2'b00;
+		if(r4_valid && s5_count == 1'b0)no5_state = 2'b01;
+		else if(r4_valid && s5_count == 1'b1)no5_state = 2'b10;
+		else no5_state = 2'b00;
 
-	// 	if(radix_no4_outvalid) next_count_y = count_y + 5'd1;
-	// 	else next_count_y = count_y;
+		if(radix_no4_outvalid) next_count_y = count_y + 5'd1;
+		else next_count_y = count_y;
 
-	// 	if(next_out_valid) begin
-	// 		next_dout_r = result_r[y_1_delay];
-	// 		next_dout_i = result_i[y_1_delay];
-	// 	end
-	// 	else begin
-	// 		next_dout_r = dout_r;
-	// 		next_dout_i = dout_i;
-	// 	end
-	// end
+		if(next_out_valid) begin
+			next_dout_r = result_r[y_1_delay];
+			next_dout_i = result_i[y_1_delay];
+		end
+		else begin
+			next_dout_r = dout_r;
+			next_dout_i = dout_i;
+		end
+	end
 	
-	// always @(*) begin
+	always @(*) begin
 
-	// 	next_over = over;
-	// 	for (i=0;i<=31;i=i+1) begin
-	// 		result_r_ns[i] = result_r[i];
-	// 		result_i_ns[i] = result_i[i];
-	// 	end
-	// 	if(next_over==1'b1)next_out_valid = 1'b1;
-	// 	else next_out_valid = assign_out;
+		next_over = over;
+		for (i=0;i<=31;i=i+1) begin
+			result_r_ns[i] = result_r[i];
+			result_i_ns[i] = result_i[i];
+		end
+		if(next_over==1'b1)next_out_valid = 1'b1;
+		else next_out_valid = assign_out;
 
-	// 	if(over!=1'b1) begin
-	// 		case((y_1))
-	// 		5'd0 : begin            
-	// 			result_r_ns[31] = out_r[23:8];
-	// 			result_i_ns[31] = out_i[23:8];
+		if(over!=1'b1) begin
+			case((y_1))
+			5'd0 : begin            
+				result_r_ns[31] = out_r[23:8];
+				result_i_ns[31] = out_i[23:8];
 				
-	// 		end
-	// 		5'd1 : begin            
-	// 			result_r_ns[15] = out_r[23:8];
-	// 			result_i_ns[15] = out_i[23:8];
-	// 		end
-	// 		5'd2 : begin            
-	// 			result_r_ns[7 ] = out_r[23:8];
-	// 			result_i_ns[7 ] = out_i[23:8];
-	// 		end
-	// 		5'd3 : begin            
-	// 			result_r_ns[23] = out_r[23:8];
-	// 			result_i_ns[23] = out_i[23:8];
-	// 		end
-	// 		5'd4 : begin            
-	// 			result_r_ns[3 ] = out_r[23:8];
-	// 			result_i_ns[3 ] = out_i[23:8];
-	// 		end
-	// 		5'd5 : begin            
-	// 			result_r_ns[19] = out_r[23:8];
-	// 			result_i_ns[19] = out_i[23:8];
-	// 		end
-	// 		5'd6 : begin            
-	// 			result_r_ns[11] = out_r[23:8];
-	// 			result_i_ns[11] = out_i[23:8];
-	// 		end
-	// 		5'd7 : begin            
-	// 			result_r_ns[27] = out_r[23:8];
-	// 			result_i_ns[27] = out_i[23:8];
-	// 		end
-	// 		5'd8: begin            
-	// 			result_r_ns[1 ] = out_r[23:8];
-	// 			result_i_ns[1 ] = out_i[23:8];
-	// 		end
-	// 		5'd9: begin            
-	// 			result_r_ns[17] = out_r[23:8];
-	// 			result_i_ns[17] = out_i[23:8];
-	// 		end
-	// 		5'd10: begin            
-	// 			result_r_ns[9] = out_r[23:8];
-	// 			result_i_ns[9] = out_i[23:8];
-	// 		end
-	// 		5'd11: begin            
-	// 			result_r_ns[25] = out_r[23:8];
-	// 			result_i_ns[25] = out_i[23:8];
-	// 		end
-	// 		5'd12: begin            
-	// 			result_r_ns[5 ] = out_r[23:8];
-	// 			result_i_ns[5 ] = out_i[23:8];
-	// 		end
-	// 		5'd13: begin            
-	// 			result_r_ns[21] = out_r[23:8];
-	// 			result_i_ns[21] = out_i[23:8];
-	// 		end
-	// 		5'd14: begin            
-	// 			result_r_ns[13] = out_r[23:8];
-	// 			result_i_ns[13] = out_i[23:8];
-	// 		end
-	// 		5'd15: begin            
-	// 			result_r_ns[29] = out_r[23:8];
-	// 			result_i_ns[29] = out_i[23:8];
-	// 		end
-	// 		5'd16: begin            
-	// 			result_r_ns[0 ] = out_r[23:8];
-	// 			result_i_ns[0 ] = out_i[23:8];
-	// 		end
-	// 		5'd17: begin            
-	// 			result_r_ns[16] = out_r[23:8];
-	// 			result_i_ns[16] = out_i[23:8];
-	// 		end
-	// 		5'd18: begin            
-	// 			result_r_ns[8 ] = out_r[23:8];
-	// 			result_i_ns[8 ] = out_i[23:8];
-	// 		end
-	// 		5'd19: begin            
-	// 			result_r_ns[24] = out_r[23:8];
-	// 			result_i_ns[24] = out_i[23:8];
-	// 		end
-	// 		5'd20: begin            
-	// 			result_r_ns[4 ] = out_r[23:8];
-	// 			result_i_ns[4 ] = out_i[23:8];
-	// 		end
-	// 		5'd21: begin            
-	// 			result_r_ns[20] = out_r[23:8];
-	// 			result_i_ns[20] = out_i[23:8];
-	// 		end
-	// 		5'd22: begin            
-	// 			result_r_ns[12] = out_r[23:8];
-	// 			result_i_ns[12] = out_i[23:8];
-	// 		end
-	// 		5'd23: begin            
-	// 			result_r_ns[28] = out_r[23:8];
-	// 			result_i_ns[28] = out_i[23:8];
-	// 		end
-	// 		5'd24: begin            
-	// 			result_r_ns[2 ] = out_r[23:8];
-	// 			result_i_ns[2 ] = out_i[23:8];
-	// 		end
-	// 		5'd25: begin            
-	// 			result_r_ns[18] = out_r[23:8];
-	// 			result_i_ns[18] = out_i[23:8];
-	// 		end
-	// 		5'd26: begin            
-	// 			result_r_ns[10] = out_r[23:8];
-	// 			result_i_ns[10] = out_i[23:8];
-	// 		end
-	// 		5'd27: begin            
-	// 			result_r_ns[26] = out_r[23:8];
-	// 			result_i_ns[26] = out_i[23:8];
-	// 		end
-	// 		5'd28: begin            
-	// 			result_r_ns[6 ] = out_r[23:8];
-	// 			result_i_ns[6 ] = out_i[23:8];
-	// 		end
-	// 		5'd29: begin            
-	// 			result_r_ns[22] = out_r[23:8];
-	// 			result_i_ns[22] = out_i[23:8];
-	// 		end
-	// 		5'd30 : begin            
-	// 			result_r_ns[14] = out_r[23:8];
-	// 			result_i_ns[14] = out_i[23:8];
-	// 		end
-	// 		5'd31 : begin            
-	// 			result_r_ns[30] = out_r[23:8];
-	// 			result_i_ns[30] = out_i[23:8];
-	// 			next_over = 1'b1;
-	// 				end
+			end
+			5'd1 : begin            
+				result_r_ns[15] = out_r[23:8];
+				result_i_ns[15] = out_i[23:8];
+			end
+			5'd2 : begin            
+				result_r_ns[7 ] = out_r[23:8];
+				result_i_ns[7 ] = out_i[23:8];
+			end
+			5'd3 : begin            
+				result_r_ns[23] = out_r[23:8];
+				result_i_ns[23] = out_i[23:8];
+			end
+			5'd4 : begin            
+				result_r_ns[3 ] = out_r[23:8];
+				result_i_ns[3 ] = out_i[23:8];
+			end
+			5'd5 : begin            
+				result_r_ns[19] = out_r[23:8];
+				result_i_ns[19] = out_i[23:8];
+			end
+			5'd6 : begin            
+				result_r_ns[11] = out_r[23:8];
+				result_i_ns[11] = out_i[23:8];
+			end
+			5'd7 : begin            
+				result_r_ns[27] = out_r[23:8];
+				result_i_ns[27] = out_i[23:8];
+			end
+			5'd8: begin            
+				result_r_ns[1 ] = out_r[23:8];
+				result_i_ns[1 ] = out_i[23:8];
+			end
+			5'd9: begin            
+				result_r_ns[17] = out_r[23:8];
+				result_i_ns[17] = out_i[23:8];
+			end
+			5'd10: begin            
+				result_r_ns[9] = out_r[23:8];
+				result_i_ns[9] = out_i[23:8];
+			end
+			5'd11: begin            
+				result_r_ns[25] = out_r[23:8];
+				result_i_ns[25] = out_i[23:8];
+			end
+			5'd12: begin            
+				result_r_ns[5 ] = out_r[23:8];
+				result_i_ns[5 ] = out_i[23:8];
+			end
+			5'd13: begin            
+				result_r_ns[21] = out_r[23:8];
+				result_i_ns[21] = out_i[23:8];
+			end
+			5'd14: begin            
+				result_r_ns[13] = out_r[23:8];
+				result_i_ns[13] = out_i[23:8];
+			end
+			5'd15: begin            
+				result_r_ns[29] = out_r[23:8];
+				result_i_ns[29] = out_i[23:8];
+			end
+			5'd16: begin            
+				result_r_ns[0 ] = out_r[23:8];
+				result_i_ns[0 ] = out_i[23:8];
+			end
+			5'd17: begin            
+				result_r_ns[16] = out_r[23:8];
+				result_i_ns[16] = out_i[23:8];
+			end
+			5'd18: begin            
+				result_r_ns[8 ] = out_r[23:8];
+				result_i_ns[8 ] = out_i[23:8];
+			end
+			5'd19: begin            
+				result_r_ns[24] = out_r[23:8];
+				result_i_ns[24] = out_i[23:8];
+			end
+			5'd20: begin            
+				result_r_ns[4 ] = out_r[23:8];
+				result_i_ns[4 ] = out_i[23:8];
+			end
+			5'd21: begin            
+				result_r_ns[20] = out_r[23:8];
+				result_i_ns[20] = out_i[23:8];
+			end
+			5'd22: begin            
+				result_r_ns[12] = out_r[23:8];
+				result_i_ns[12] = out_i[23:8];
+			end
+			5'd23: begin            
+				result_r_ns[28] = out_r[23:8];
+				result_i_ns[28] = out_i[23:8];
+			end
+			5'd24: begin            
+				result_r_ns[2 ] = out_r[23:8];
+				result_i_ns[2 ] = out_i[23:8];
+			end
+			5'd25: begin            
+				result_r_ns[18] = out_r[23:8];
+				result_i_ns[18] = out_i[23:8];
+			end
+			5'd26: begin            
+				result_r_ns[10] = out_r[23:8];
+				result_i_ns[10] = out_i[23:8];
+			end
+			5'd27: begin            
+				result_r_ns[26] = out_r[23:8];
+				result_i_ns[26] = out_i[23:8];
+			end
+			5'd28: begin            
+				result_r_ns[6 ] = out_r[23:8];
+				result_i_ns[6 ] = out_i[23:8];
+			end
+			5'd29: begin            
+				result_r_ns[22] = out_r[23:8];
+				result_i_ns[22] = out_i[23:8];
+			end
+			5'd30 : begin            
+				result_r_ns[14] = out_r[23:8];
+				result_i_ns[14] = out_i[23:8];
+			end
+			5'd31 : begin            
+				result_r_ns[30] = out_r[23:8];
+				result_i_ns[30] = out_i[23:8];
+				next_over = 1'b1;
+					end
 
-	// 		endcase
-	// 	end
-	// end
+			endcase
+		end
+	end
 
 endmodule

@@ -110,12 +110,12 @@ initial begin
 
 		for(j=0;j<FFT_size;j=j+1) begin
 
-			$display("Iteração numero %0d do total de %0d", j, FFT_size);
+			// $display("Iteração numero %0d do total de %0d", j, FFT_size);
 				
 			@(negedge clk);
 			in_valid = 1;
 
-			$display("Valor de in_valid %0d", in_valid);
+			// $display("Valor de in_valid %0d", in_valid);
 			int_r = $fscanf(fp_r, "%d", din_r);
 			int_i = $fscanf(fp_i, "%d", din_i);
 
