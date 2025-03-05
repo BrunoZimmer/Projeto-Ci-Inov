@@ -299,47 +299,6 @@
      end
  
 
-
-////////////////////////////////////////////////////////////////////////////
-//  FFT ACCELERATOR
-////////////////////////////////////////////////////////////////////////////
-
-// FFT VARIABLES
-    
-    logic                   accel_out_en;      // 1  bits
-    logic   [15:0]          accel_dout_r;      // 16 bits
-    logic   [15:0]          accel_dout_i;       // 16 bits
-    parameter IN_width		= 12;
-    parameter OUT_width		= 16;
-
-    logic out_valid, reset;
-    logic [IN_width-1:0] din_r = accel_input[2*IN_width-1:IN_width];
-    logic [IN_width-1:0] din_i = accel_input[IN_width-1:0];
-
-    logic clk_fft;
-
-    always_comb begin
-        if(accel_en) begin
-            clk_fft = clk;   
-            reset = ~reset_n;
-        end else begin 
-            clk_fft = 0;       
-            reset = 0;     
-        end
-    end
-
-// FFT DECLARATION
-    FFT FFT_CORE(
-        .clk(clk),
-        .reset(reset),
-        .in_valid(accel_en),        // 1  bits
-        .din_r(din_r),              // 12 bits  
-        .din_i(din_i),              // 12 bits
-        .out_valid(accel_out_en),   // 1  bits
-        .dout_r(accel_dout_r),      // 16 bits
-        .dout_i(accel_dout_i)       // 16 bits
-    );
-
  
  //////////////////////////////////////////////////////////////////////////////
  // RAM
@@ -435,3 +394,43 @@
 
  endmodule
  
+
+////////////////////////////////////////////////////////////////////////////
+//  FFT ACCELERATOR
+////////////////////////////////////////////////////////////////////////////
+
+// FFT VARIABLES
+    
+    logic                   accel_out_en;      // 1  bits
+    logic   [15:0]          accel_dout_r;      // 16 bits
+    logic   [15:0]          accel_dout_i;       // 16 bits
+    parameter IN_width		= 12;
+    parameter OUT_width		= 16;
+
+    logic out_valid, reset;
+    logic [IN_width-1:0] din_r = fft_ram_out_r[IN_width-1:0];
+    logic [IN_width-1:0] din_i = fft_ram_out_i[IN_width-1:0];
+
+    logic clk_fft;
+
+    always_comb begin
+        if(accel_en) begin
+            clk_fft = clk;   
+            reset = ~reset_n;
+        end else begin 
+            clk_fft = 0;       
+            reset = 0;     
+        end
+    end
+
+// FFT DECLARATION
+    FFT FFT_CORE(
+        .clk(clk),
+        .reset(reset),
+        .in_valid(accel_en),        // 1  bits
+        .din_r(din_r),              // 12 bits  
+        .din_i(din_i),              // 12 bits
+        .out_valid(accel_out_en),   // 1  bits
+        .dout_r(accel_dout_r),      // 16 bits
+        .dout_i(accel_dout_i)       // 16 bits
+    );
