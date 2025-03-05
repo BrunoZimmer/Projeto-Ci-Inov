@@ -436,6 +436,7 @@
             end
         end 
     end
+    
 // FFT DECLARATION
     FFT FFT_CORE(
         .clk(clk),
