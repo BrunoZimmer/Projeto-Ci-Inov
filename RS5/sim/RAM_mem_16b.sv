@@ -1,19 +1,3 @@
-/*!\file ram.sv
- * RS5 VERSION - 1.1.0 - Pipeline Simplified and Core Renamed
- *
- * Distribution:  OCtober 2023
- *
- * Willian Nunes    <willian.nunes@edu.pucrs.br>
- * Angelo Dal Zotto <angelo.dalzotto@edu.pucrs.br>
- *
- * Research group: GAPH-PUCRS  <>
- *
- * \brief
- * RAM implementation for RS5 simulation.
- *
- * \detailed
- * RAM implementation for RS5 simulation.
- */
 
 //////////////////////////////////////////////////////////////////////////////
 // RAM MEMORY
