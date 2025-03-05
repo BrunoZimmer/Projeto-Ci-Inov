@@ -400,15 +400,15 @@
 ////////////////////////////////////////////////////////////////////////////
 
 // FFT VARIABLES
-    
-    logic                   accel_out_en;      // 1  bits
-    logic   [15:0]          accel_dout_r;      // 16 bits
-    logic   [15:0]          accel_dout_i;       // 16 bits
     parameter IN_width		= 12;
     parameter OUT_width		= 16;
+    
+    logic                   accel_out_en;      // 1  bits
+    logic   [OUT_width-1:0]          accel_dout_r;      // 16 bits
+    logic   [OUT_width-1:0]          accel_dout_i;       // 16 bits
 
     logic out_valid, reset;
-    logic [IN_width-1:0] din_r = fft_ram_out_r[IN_width-1:0];
+    logic [IN_width-1:0] din_r ;
     logic [IN_width-1:0] din_i = fft_ram_out_i[IN_width-1:0];
 
     logic clk_fft;
@@ -423,6 +423,19 @@
         end
     end
 
+    always_ff @(posedge clk) begin
+        din_r <= fft_ram_out_r[IN_width-1:0];
+        din_i <= fft_ram_out_i[IN_width-1:0];
+        if(accel_en) begin
+            for (int i = 0; i < 32; i = i + 2) begin
+                mem_write_enable_fft  = 1'b0;                
+                enable_ram_fft        = 1'b1;                
+                addr_i = i;
+                $display("Addr %d: data_o_b = %h", i, fft_ram_out_i);
+                $display("Addr %d: data_o_a = %h", i+1, fft_ram_out_r);
+            end
+        end 
+    end
 // FFT DECLARATION
     FFT FFT_CORE(
         .clk(clk),
