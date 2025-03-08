@@ -275,6 +275,7 @@ module FFT(
 			din_r_reg <= {{4{din_r[11]}},din_r,8'b0};
 			din_i_reg <= {{4{din_i[11]}},din_i,8'b0};
 			in_valid_reg <= in_valid;
+			// $display("Valor de in_valid %d and in_valid_reg %d", in_valid, in_valid_reg);
 			s5_count <= next_s5_count;
 			r4_valid <= next_r4_valid;
 			count_y  <= next_count_y;
@@ -287,7 +288,6 @@ module FFT(
 				result_r[i] <= result_r_ns[i];
 				result_i[i] <= result_i_ns[i];
 			end
-			// $display("Valor de result_r %0d", result_r[i]);
 		end
 	end
 	always@(*)begin

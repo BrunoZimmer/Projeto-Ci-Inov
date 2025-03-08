@@ -150,7 +150,7 @@ always_comb begin
         end
         default:  begin 
             //accel_input = rs1_data_i;
-            accel_en = 1'b1;
+            accel_en = 1'b0;
         end
     endcase
 end

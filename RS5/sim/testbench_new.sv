@@ -68,6 +68,7 @@
  
      initial begin
          reset_n = 0;                                          // RESET for CPU initialization
+         
  
          #100 reset_n = 1;                                     // Hold state for 100 ns
      end
@@ -276,27 +277,27 @@
  //////////////////////////////////////////////////////////////////////////////
  
      always_ff @(posedge clk) begin
-         if (enable_tb) begin
-             // OUTPUT REG
-             if ((mem_address == 32'h80004000 || mem_address == 32'h80001000) && mem_write_enable != '0) begin
-                 char <= mem_data_write[7:0];
-                 $write("%c",char);
-                 $fflush();
-             end
-             else if (mem_address == 32'h80002000 && mem_write_enable != '0) begin
-                 $write("%0d\n",mem_data_write);
-                 $fflush();
-             end
-             // END REG
-             if (mem_address == 32'h80000000 && mem_write_enable != '0) begin
-                 $display("# %t END OF SIMULATION",$time);
-                 $finish;
-             end
-         end
-         else begin
-             data_tb <= '0;
-         end
-     end
+        if (enable_tb) begin
+            // OUTPUT REG
+            if ((mem_address == 32'h80004000 || mem_address == 32'h80001000) && mem_write_enable != '0) begin
+                char <= mem_data_write[7:0];
+                $write("%c",char);
+                $fflush();
+            end
+            else if (mem_address == 32'h80002000 && mem_write_enable != '0) begin
+                $write("%0d\n",mem_data_write);
+                $fflush();
+            end
+            // END REG
+            if (mem_address == 32'h80000000 && mem_write_enable != '0) begin
+                $display("# %t END OF SIMULATION",$time);
+                $finish;
+            end
+        end
+        else begin
+            data_tb <= '0;
+        end
+    end
  
 
  
@@ -305,9 +306,9 @@
  //////////////////////////////////////////////////////////////////////////////
  
     
-    logic                enable_ram_fft;
-    logic                mem_write_enable_fft;
-    logic [31:0]         fft_ram_address_in;
+    logic                enable_ram_fft_initial, reset;
+    logic                mem_write_enable_fft_initial;
+    logic [31:0]         ram_address_in_fft_initial;
     logic [31:0]         fft_ram_in;
     logic [31:0]         fft_ram_out_r;
     logic [31:0]         fft_ram_out_i;
@@ -316,6 +317,9 @@
     localparam string    FFT_INPUT_IMAG       = "../sim/Test_cases/IN_imag_pattern05.txt";
     localparam string    FFT_INPUT_REAL       = "../sim/Test_cases/IN_real_pattern05.txt";
     
+    logic                           enable_ram_fft_runtime ;
+    logic                           mem_write_enable_fft_runtime;
+    logic [31:0]                    ram_address_in_fft_runtime;
     // Lógica de controle para ler o arquivo e escrever os valores na RAM pela porta B
     initial begin
         integer fd, ret;
@@ -323,14 +327,16 @@
         // Usamos um registrador com sinal para comportar números negativos
         reg signed [31:0] value;  
         
+        reset = 1;                                          // RESET for CPU initialization 
+        #100 reset = 0;                                     // Hold state for 100 ns
         // Inicializa os sinais de controle da porta B
         for (i = 0; i < 2; i = i + 1) begin
-            enable_ram_fft    = 1'b0;
-            mem_write_enable_fft = 1'h0;
-            fft_ram_address_in = 32'd0;
+            enable_ram_fft_initial    = 1'b0;
+            mem_write_enable_fft_initial = 1'h0;
+            ram_address_in_fft_initial = 32'd0;
             fft_ram_in        = 32'd0;
             addr_counter        = 0;
-        
+            
             // Aguardar um pequeno delay para estabilização (ou aguardar reset, se necessário)
             #10;
             @(posedge clk);
@@ -348,103 +354,148 @@
                 $finish;
             end
             // Lê o arquivo e escreve cada valor em um endereço consecutivo
+
             while (!$feof(fd)) begin
                 ret = $fscanf(fd, "%d\n", value);  // Lê valor decimal (sendo possível ler números negativos)
                 if (ret != 1) begin
                     $display("Aviso: leitura inválida (ret = %0d) no arquivo", ret);
                     break;
                 end
-
+                
                 // Configura os sinais para a escrita:
-                fft_ram_address_in    = addr_counter + i;         // endereços crescentes a partir de 0
-                fft_ram_in            = value[31:0];           // valor lido do arquivo
-                mem_write_enable_fft  = 1'b1;                 // ativa escrita para os 4 bytes (escrita completa)
-                enable_ram_fft        = 1'b1;                 // habilita a porta B para escrita
+                if(addr_counter == 0)
+                    #1 ram_address_in_fft_initial    = addr_counter + i;         // endereços crescentes a partir de 0
+                else
+                    ram_address_in_fft_initial    = addr_counter + i;         // endereços crescentes a partir de 0
 
+                fft_ram_in                    = value[31:0];           // valor lido do arquivo
+                mem_write_enable_fft_initial  = 1'b1;                 // ativa escrita para os 4 bytes (escrita completa)
+                enable_ram_fft_initial        = 1'b1;                 // habilita a porta B para escrita
+                
                 // Aguarda a borda de subida do clock para efetivar a escrita
                 @(posedge clk);
                 
                 // Após o ciclo, desabilita o write para evitar escrita repetida
-                mem_write_enable_fft = 4'h0;
-                enable_ram_fft    = 1'b0;
+                mem_write_enable_fft_initial = 4'h0;
+                enable_ram_fft_initial    = 1'b0;
                 
                 addr_counter = addr_counter + 2;
             end
             $fclose(fd);
-
         end
+
+        ram_address_in_fft_initial = 32'd0;
+        enable_ram_fft_initial    = 1'b1;
         
-        $display("Finalizado o carregamento do arquivo na RAM. Total de palavras escritas: %0d", addr_counter);
+        $display("Finalizado o carregamento do arquivo na RAM.\nTotal de palavras escritas: %0d\n", addr_counter);
+        
     end
+    
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    //  FFT ACCELERATOR
+    ////////////////////////////////////////////////////////////////////////////
+    
+    // FFT VARIABLES
+    parameter IN_width		= 12;
+    parameter OUT_width		= 16;
+    logic reset_runtime;
+    logic                           accel_out_en;      // 1  bits
+    logic        [OUT_width-1:0]    accel_dout_r;      // 16 bits
+    logic        [OUT_width-1:0]    accel_dout_i;       // 16 bits
+
+    logic                           out_valid;
+    logic signed [IN_width-1:0]     din_r;
+    logic        [IN_width-1:0]     din_i;
+
+    logic                           clk_fft;
+    logic        [5:0]              cycle_count; // Contador de ciclos
+
+
+    always_comb begin
+        // Valores padrão
+        // clk_fft = 0;
+        // reset = 1;
+        // din_r = 12'b0;
+        // din_i = 12'b0;
+    
+        clk_fft = clk;   
+        if (accel_en) begin
+            assign din_r = fft_ram_out_r[IN_width-1:0];
+            assign din_i = fft_ram_out_i[IN_width-1:0];
+        end 
+    end
+    
+    always_ff @(posedge clk) begin
+        // if ($time >0) begin
+        if (accel_en) begin
+            reset_runtime = 0;
+            cycle_count =  cycle_count+2;
+            enable_ram_fft_runtime = 1'b1;
+            
+            if (cycle_count > 65) begin
+                cycle_count <= 0; 
+            end
+        end else begin
+            cycle_count = 0; 
+            reset_runtime = 1;
+        end
+
+        // if (cycle_count>1) begin
+        //     $display("Cycle_count:  %d\n ram_address_in_fft = %d \n enable_ram_fft_runtime = %d \n ram_address_in_fft_runtime = %d\n\n", 
+        //         cycle_count, ram_address_in_fft, enable_ram_fft_runtime, ram_address_in_fft_runtime
+        //     );
+        // end
+
+        if (reset_runtime) begin
+            cycle_count <= 0;
+            mem_write_enable_fft_runtime <= 1'b0;
+            enable_ram_fft_runtime <= 1'b0;
+            ram_address_in_fft_runtime <= 32'b0;
+        end 
+        ram_address_in_fft_runtime <= cycle_count;
+        // end
+    end
+    
+    // logic enable_ram_fft;
+    // logic mem_write_enable_fft;
+    logic   [31:0]  ram_address_in_fft;
+    // Combina os sinais das fases inicial e runtime
+    // assign enable_ram_fft = enable_ram_fft_initial | enable_ram_fft_runtime;
+    // assign mem_write_enable_fft = mem_write_enable_fft_initial | mem_write_enable_fft_runtime;
+    assign ram_address_in_fft = ram_address_in_fft_initial | ram_address_in_fft_runtime;
+    
+    logic rst;
+    assign rst = reset | reset_runtime;
+
 
     RAM_mem_16b #(
             .MEM_WIDTH(128),
             .WORD_WIDTH(16)
-        ) RAM_FFT (
-            .clk        (clk),
+    ) RAM_FFT (
+        .clk         (clk),
+        .rst         (rst),
+        .en_i        (enable_ram_fft_initial),
+        .we_i        (mem_write_enable_fft_initial),
+        .addr_i      (ram_address_in_fft),
+        .data_i      (fft_ram_in),
+        .data_o_a    (fft_ram_out_i),
+        .data_o_b    (fft_ram_out_r)
+    );
     
-            .en_i      (enable_ram_fft),
-            .we_i      (mem_write_enable_fft),
-            .addr_i    (fft_ram_address_in[($clog2(MEM_WIDTH) - 1):0]),
-            .data_i    (fft_ram_in),
-            .data_o_a    (fft_ram_out_i),
-            .data_o_b    (fft_ram_out_r)
-        );
-    
-
- endmodule
- 
-
-////////////////////////////////////////////////////////////////////////////
-//  FFT ACCELERATOR
-////////////////////////////////////////////////////////////////////////////
-
-// FFT VARIABLES
-    parameter IN_width		= 12;
-    parameter OUT_width		= 16;
-    
-    logic                   accel_out_en;      // 1  bits
-    logic   [OUT_width-1:0]          accel_dout_r;      // 16 bits
-    logic   [OUT_width-1:0]          accel_dout_i;       // 16 bits
-
-    logic out_valid, reset;
-    logic [IN_width-1:0] din_r ;
-    logic [IN_width-1:0] din_i = fft_ram_out_i[IN_width-1:0];
-
-    logic clk_fft;
-
-    always_comb begin
-        if(accel_en) begin
-            clk_fft = clk;   
-            reset = ~reset_n;
-        end else begin 
-            clk_fft = 0;       
-            reset = 0;     
-        end
-    end
-
-    always_ff @(posedge clk) begin
-        din_r <= fft_ram_out_r[IN_width-1:0];
-        din_i <= fft_ram_out_i[IN_width-1:0];
-        if(accel_en) begin
-            for (int i = 0; i < 32; i = i + 2) begin
-                mem_write_enable_fft  = 1'b0;                
-                enable_ram_fft        = 1'b1;                
-                addr_i = i;
-                $display("Addr %d: data_o_b = %h", i, fft_ram_out_i);
-                $display("Addr %d: data_o_a = %h", i+1, fft_ram_out_r);
-            end
-        end 
-    end
     
 // FFT DECLARATION
     FFT FFT_CORE(
-        .clk(clk),
-        .reset(reset),
+        .clk(clk_fft),
+        .reset(rst),               // RESET INVERTIDO
         .in_valid(accel_en),        // 1  bits
-        .din_r(din_r),              // 12 bits  
-        .din_i(din_i),              // 12 bits
+        .din_r(fft_ram_out_i[IN_width-1:0]),              // 12 bits  
+        .din_i(fft_ram_out_r[IN_width-1:0]),              // 12 bits
         .out_valid(accel_out_en),   // 1  bits
         .dout_r(accel_dout_r),      // 16 bits
         .dout_i(accel_dout_i)       // 16 bits
     );
+
+
+endmodule

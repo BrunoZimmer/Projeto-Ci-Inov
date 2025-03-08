@@ -13,7 +13,7 @@ module RAM_mem_16b
 )
 (
     input  logic                             clk,
-
+    input  logic                             rst,
     input  logic                             en_i,
     input  logic                             we_i,
     input  logic [($clog2(MEM_WIDTH) - 1):0] addr_i,
@@ -40,13 +40,26 @@ module RAM_mem_16b
     end
 
     /* Read */
-    always_ff @(posedge clk) begin
+    always_ff @(posedge clk or negedge rst) begin
+        if (rst) begin
+            data_o_a            <= 32'b0;
+            data_o_b            <= 32'b0;
+
+        end
         if (en_i == 1'b1) begin
             if (we_i == '0) begin
-                data_o_a[MEM_WIDTH-1:0]    <= RAM[addr_i];
-                data_o_b[MEM_WIDTH-1:0]    <= RAM[addr_i+1];
+                data_o_a[WORD_WIDTH-1:0]    <= RAM[addr_i];
+                data_o_b[WORD_WIDTH-1:0]    <= RAM[addr_i+1];
+
+                if (RAM[addr_i]=== 16'bx) begin
+                    data_o_a[WORD_WIDTH-1:0]    <= 16'b0;
+                end
+                if (RAM[addr_i+1]=== 16'bx) begin
+                    data_o_b[WORD_WIDTH-1:0]    <= 16'b0;
+                end
             end
         end
     end
+
 
 endmodule
