@@ -414,7 +414,6 @@
         clk_fft = clk;   
         if (accel_en) begin
             assign din_r = fft_ram_out_r[IN_width-1:0];
-            assign din_i = fft_ram_out_i[IN_width-1:0];
         end 
     end
     
@@ -422,42 +421,60 @@
         // if ($time >0) begin
         if (accel_en) begin
             reset_runtime = 0;
-            cycle_count =  cycle_count+2;
             enable_ram_fft_runtime = 1'b1;
             
-            if (cycle_count > 65) begin
-                cycle_count <= 0; 
-            end
         end else begin
-            cycle_count = 0; 
             reset_runtime = 1;
+            enable_ram_fft_runtime <= 1'b0;
         end
 
-        // if (cycle_count>1) begin
-        //     $display("Cycle_count:  %d\n ram_address_in_fft = %d \n enable_ram_fft_runtime = %d \n ram_address_in_fft_runtime = %d\n\n", 
-        //         cycle_count, ram_address_in_fft, enable_ram_fft_runtime, ram_address_in_fft_runtime
-        //     );
-        // end
 
         if (reset_runtime) begin
-            cycle_count <= 0;
-            mem_write_enable_fft_runtime <= 1'b0;
             enable_ram_fft_runtime <= 1'b0;
             ram_address_in_fft_runtime <= 32'b0;
         end 
-        if (ram_address_in_fft_initial == 32'b0)
-            ram_address_in_fft_runtime <= cycle_count;
-        else
-            ram_address_in_fft_runtime <= 0;
-        // end
+        
     end
     
     logic   [31:0]  ram_address_in_fft;
     assign ram_address_in_fft = ram_address_in_fft_initial | ram_address_in_fft_runtime;
+    assign enable_ram_fft = enable_ram_fft_initial | enable_ram_fft_runtime;
     
     logic rst;
     assign rst = reset | reset_runtime;
 
+    logic		[OUT_width-1:0]		data_o_0_r;	
+	logic		[OUT_width-1:0]		data_o_1_r;
+	logic		[OUT_width-1:0]		data_o_2_r;
+	logic		[OUT_width-1:0]		data_o_3_r;
+	logic		[OUT_width-1:0]		data_o_4_r;	
+	logic		[OUT_width-1:0]		data_o_5_r;
+	logic		[OUT_width-1:0]		data_o_6_r;
+	logic		[OUT_width-1:0]		data_o_7_r;
+	logic		[OUT_width-1:0]		data_o_8_r;
+	logic		[OUT_width-1:0]		data_o_9_r;
+	logic		[OUT_width-1:0]		data_o_10_r;	
+	logic		[OUT_width-1:0]		data_o_11_r;
+	logic		[OUT_width-1:0]		data_o_12_r;
+	logic		[OUT_width-1:0]		data_o_13_r;
+	logic		[OUT_width-1:0]		data_o_14_r;
+	logic		[OUT_width-1:0]		data_o_15_r;
+	logic		[OUT_width-1:0]		data_o_16_r;	
+	logic		[OUT_width-1:0]		data_o_17_r;
+	logic		[OUT_width-1:0]		data_o_18_r;
+	logic		[OUT_width-1:0]		data_o_19_r;
+	logic		[OUT_width-1:0]		data_o_20_r;
+	logic		[OUT_width-1:0]		data_o_21_r;
+	logic		[OUT_width-1:0]		data_o_22_r;	
+	logic		[OUT_width-1:0]		data_o_23_r;
+	logic		[OUT_width-1:0]		data_o_24_r;
+	logic		[OUT_width-1:0]		data_o_25_r;
+	logic		[OUT_width-1:0]		data_o_26_r;
+	logic		[OUT_width-1:0]		data_o_27_r;
+	logic		[OUT_width-1:0]		data_o_28_r;	
+	logic		[OUT_width-1:0]		data_o_29_r;
+	logic		[OUT_width-1:0]		data_o_30_r;
+	logic		[OUT_width-1:0]		data_o_31_r;
 
     RAM_mem_16b #(
         .MEM_WIDTH(128),
@@ -465,12 +482,42 @@
     ) RAM_FFT (
         .clk         (clk),
         .rst         (rst),
-        .en_i        (enable_ram_fft_initial),
+        .en_i        (enable_ram_fft),
         .we_i        (mem_write_enable_fft_initial),
         .addr_i      (ram_address_in_fft),
         .data_i      (fft_ram_in),
-        .data_o_a    (fft_ram_out_i),
-        .data_o_b    (fft_ram_out_r)
+        .data_o_0_r  (data_o_0_r),
+        .data_o_1_r  (data_o_1_r),
+        .data_o_2_r  (data_o_2_r),
+        .data_o_3_r  (data_o_3_r),
+        .data_o_4_r  (data_o_4_r),
+        .data_o_5_r  (data_o_5_r),
+        .data_o_6_r  (data_o_6_r),
+        .data_o_7_r  (data_o_7_r),
+        .data_o_8_r  (data_o_8_r),
+        .data_o_9_r  (data_o_9_r),
+        .data_o_10_r (data_o_10_r),
+        .data_o_11_r (data_o_11_r),
+        .data_o_12_r (data_o_12_r),
+        .data_o_13_r (data_o_13_r),
+        .data_o_14_r (data_o_14_r),
+        .data_o_15_r (data_o_15_r),
+        .data_o_16_r (data_o_16_r),
+        .data_o_17_r (data_o_17_r),
+        .data_o_18_r (data_o_18_r),
+        .data_o_19_r (data_o_19_r),
+        .data_o_20_r (data_o_20_r),
+        .data_o_21_r (data_o_21_r),
+        .data_o_22_r (data_o_22_r),
+        .data_o_23_r (data_o_23_r),
+        .data_o_24_r (data_o_24_r),
+        .data_o_25_r (data_o_25_r),
+        .data_o_26_r (data_o_26_r),
+        .data_o_27_r (data_o_27_r),
+        .data_o_28_r (data_o_28_r),
+        .data_o_29_r (data_o_29_r),
+        .data_o_30_r (data_o_30_r),
+        .data_o_31_r (data_o_31_r)
     );
     
     
@@ -478,146 +525,112 @@
     parameter N = 16;
 	parameter Q = 8;
 	
-	reg 				rst;
-	reg					clk2;
-   	wire                 out_en;
+	// logic					clk2;
+   	logic                 out_en;
 	
-	reg		[N-1:0]		in0_r;	
-	reg		[N-1:0]		in1_r;	
-	reg		[N-1:0]		in2_r;	
-	reg		[N-1:0]		in3_r;
-	reg		[N-1:0]		in4_r;
-	reg		[N-1:0]		in5_r;
-	reg		[N-1:0]		in6_r;
-	reg		[N-1:0]		in7_r;
-	reg		[N-1:0]		in8_r;
-	reg		[N-1:0]		in9_r;			
-	reg		[N-1:0]		in10_r;
-	reg		[N-1:0]		in11_r;
-	reg		[N-1:0]		in12_r;
-	reg		[N-1:0]		in13_r;
-	reg		[N-1:0]		in14_r;
-	reg		[N-1:0]		in15_r;
-	reg		[N-1:0]		in16_r;
-	reg		[N-1:0]		in17_r;
-	reg		[N-1:0]		in18_r;
-	reg		[N-1:0]		in19_r;
-	reg		[N-1:0]		in20_r;
-	reg		[N-1:0]		in21_r;
-	reg		[N-1:0]		in22_r;
-	reg		[N-1:0]		in23_r;
-	reg		[N-1:0]		in24_r;
-	reg		[N-1:0]		in25_r;
-	reg		[N-1:0]		in26_r;
-	reg		[N-1:0]		in27_r;
-	reg		[N-1:0]		in28_r;
-	reg		[N-1:0]		in29_r;
-	reg		[N-1:0]		in30_r;	
-	reg		[N-1:0]		in31_r;
-	
-    wire		[N-1:0]		out0_r;
-	wire		[N-1:0]		out0_i;	
-	wire		[N-1:0]		out1_r;
-	wire		[N-1:0]		out1_i;
-	wire		[N-1:0]		out2_r;
-	wire		[N-1:0]		out2_i;
-	wire		[N-1:0]		out3_r;
-	wire		[N-1:0]		out3_i;
-	wire		[N-1:0]		out4_r;
-	wire		[N-1:0]		out4_i;	
-	wire		[N-1:0]		out5_r;
-	wire		[N-1:0]		out5_i;
-	wire		[N-1:0]		out6_r;
-	wire		[N-1:0]		out6_i;
-	wire		[N-1:0]		out7_r;
-	wire		[N-1:0]		out7_i;
-	wire		[N-1:0]		out8_r;
-	wire		[N-1:0]		out8_i;
-	wire		[N-1:0]		out9_r;
-	wire		[N-1:0]		out9_i;
-	wire		[N-1:0]		out10_r;
-	wire		[N-1:0]		out10_i;	
-	wire		[N-1:0]		out11_r;
-	wire		[N-1:0]		out11_i;
-	wire		[N-1:0]		out12_r;
-	wire		[N-1:0]		out12_i;
-	wire		[N-1:0]		out13_r;
-	wire		[N-1:0]		out13_i;
-	wire		[N-1:0]		out14_r;
-	wire		[N-1:0]		out14_i;
-	wire		[N-1:0]		out15_r;
-	wire		[N-1:0]		out15_i;
-	wire		[N-1:0]		out16_r;
-	wire		[N-1:0]		out16_i;	
-	wire		[N-1:0]		out17_r;
-	wire		[N-1:0]		out17_i;
-	wire		[N-1:0]		out18_r;
-	wire		[N-1:0]		out18_i;
-	wire		[N-1:0]		out19_r;
-	wire		[N-1:0]		out19_i;
-	wire		[N-1:0]		out20_r;
-	wire		[N-1:0]		out20_i;
-	wire		[N-1:0]		out21_r;
-	wire		[N-1:0]		out21_i;
-	wire		[N-1:0]		out22_r;
-	wire		[N-1:0]		out22_i;	
-	wire		[N-1:0]		out23_r;
-	wire		[N-1:0]		out23_i;
-	wire		[N-1:0]		out24_r;
-	wire		[N-1:0]		out24_i;
-	wire		[N-1:0]		out25_r;
-	wire		[N-1:0]		out25_i;
-	wire		[N-1:0]		out26_r;
-	wire		[N-1:0]		out26_i;
-	wire		[N-1:0]		out27_r;
-	wire		[N-1:0]		out27_i;
-	wire		[N-1:0]		out28_r;
-	wire		[N-1:0]		out28_i;	
-	wire		[N-1:0]		out29_r;
-	wire		[N-1:0]		out29_i;
-	wire		[N-1:0]		out30_r;
-	wire		[N-1:0]		out30_i;
-	wire		[N-1:0]		out31_r;
-	wire		[N-1:0]		out31_i;
+    logic		[N-1:0]		out0_r;
+	logic		[N-1:0]		out0_i;	
+	logic		[N-1:0]		out1_r;
+	logic		[N-1:0]		out1_i;
+	logic		[N-1:0]		out2_r;
+	logic		[N-1:0]		out2_i;
+	logic		[N-1:0]		out3_r;
+	logic		[N-1:0]		out3_i;
+	logic		[N-1:0]		out4_r;
+	logic		[N-1:0]		out4_i;	
+	logic		[N-1:0]		out5_r;
+	logic		[N-1:0]		out5_i;
+	logic		[N-1:0]		out6_r;
+	logic		[N-1:0]		out6_i;
+	logic		[N-1:0]		out7_r;
+	logic		[N-1:0]		out7_i;
+	logic		[N-1:0]		out8_r;
+	logic		[N-1:0]		out8_i;
+	logic		[N-1:0]		out9_r;
+	logic		[N-1:0]		out9_i;
+	logic		[N-1:0]		out10_r;
+	logic		[N-1:0]		out10_i;	
+	logic		[N-1:0]		out11_r;
+	logic		[N-1:0]		out11_i;
+	logic		[N-1:0]		out12_r;
+	logic		[N-1:0]		out12_i;
+	logic		[N-1:0]		out13_r;
+	logic		[N-1:0]		out13_i;
+	logic		[N-1:0]		out14_r;
+	logic		[N-1:0]		out14_i;
+	logic		[N-1:0]		out15_r;
+	logic		[N-1:0]		out15_i;
+	logic		[N-1:0]		out16_r;
+	logic		[N-1:0]		out16_i;	
+	logic		[N-1:0]		out17_r;
+	logic		[N-1:0]		out17_i;
+	logic		[N-1:0]		out18_r;
+	logic		[N-1:0]		out18_i;
+	logic		[N-1:0]		out19_r;
+	logic		[N-1:0]		out19_i;
+	logic		[N-1:0]		out20_r;
+	logic		[N-1:0]		out20_i;
+	logic		[N-1:0]		out21_r;
+	logic		[N-1:0]		out21_i;
+	logic		[N-1:0]		out22_r;
+	logic		[N-1:0]		out22_i;	
+	logic		[N-1:0]		out23_r;
+	logic		[N-1:0]		out23_i;
+	logic		[N-1:0]		out24_r;
+	logic		[N-1:0]		out24_i;
+	logic		[N-1:0]		out25_r;
+	logic		[N-1:0]		out25_i;
+	logic		[N-1:0]		out26_r;
+	logic		[N-1:0]		out26_i;
+	logic		[N-1:0]		out27_r;
+	logic		[N-1:0]		out27_i;
+	logic		[N-1:0]		out28_r;
+	logic		[N-1:0]		out28_i;	
+	logic		[N-1:0]		out29_r;
+	logic		[N-1:0]		out29_i;
+	logic		[N-1:0]		out30_r;
+	logic		[N-1:0]		out30_i;
+	logic		[N-1:0]		out31_r;
+	logic		[N-1:0]		out31_i;
 
 	
-top # (.N(N), .Q(Q)) top1
+fft_parallel # (.N(N), .Q(Q)) fft
 (
 	.rst(rst),
-	.clk2(clk2),
+	.clk2(clk),
 	.out_en(out_en),
-	.in0_r(in0_r),	
-	.in1_r(in1_r),	
-	.in2_r(in2_r),	
-	.in3_r(in3_r),
-	.in4_r(in4_r),
-	.in5_r(in5_r),
-	.in6_r(in6_r),
-	.in7_r(in7_r),
-	.in8_r(in8_r),
-	.in9_r(in9_r),			
-	.in10_r(in10_r),
-	.in11_r(in11_r),
-	.in12_r(in12_r),
-	.in13_r(in13_r),
-	.in14_r(in14_r),
-	.in15_r(in15_r),
-	.in16_r(in16_r),
-	.in17_r(in17_r),
-	.in18_r(in18_r),
-	.in19_r(in19_r),
-	.in20_r(in20_r),
-	.in21_r(in21_r),
-	.in22_r(in22_r),
-	.in23_r(in23_r),
-	.in24_r(in24_r),
-	.in25_r(in25_r),
-	.in26_r(in26_r),
-	.in27_r(in27_r),
-	.in28_r(in28_r),
-	.in29_r(in29_r),
-	.in30_r(in30_r),	
-	.in31_r(in31_r),
+	.in0_r(data_o_0_r),	
+	.in1_r(data_o_1_r),	
+	.in2_r(data_o_2_r),	
+	.in3_r(data_o_3_r),
+	.in4_r(data_o_4_r),
+	.in5_r(data_o_5_r),
+	.in6_r(data_o_6_r),
+	.in7_r(data_o_7_r),
+	.in8_r(data_o_8_r),
+	.in9_r(data_o_9_r),			
+	.in10_r(data_o_10_r),
+	.in11_r(data_o_11_r),
+	.in12_r(data_o_12_r),
+	.in13_r(data_o_13_r),
+	.in14_r(data_o_14_r),
+	.in15_r(data_o_15_r),
+	.in16_r(data_o_16_r),
+	.in17_r(data_o_17_r),
+	.in18_r(data_o_18_r),
+	.in19_r(data_o_19_r),
+	.in20_r(data_o_20_r),
+	.in21_r(data_o_21_r),
+	.in22_r(data_o_22_r),
+	.in23_r(data_o_23_r),
+	.in24_r(data_o_24_r),
+	.in25_r(data_o_25_r),
+	.in26_r(data_o_26_r),
+	.in27_r(data_o_27_r),
+	.in28_r(data_o_28_r),
+	.in29_r(data_o_29_r),
+	.in30_r(data_o_30_r),	
+	.in31_r(data_o_31_r),
 	
     .out0_r(out0_r),
 	.out0_i(out0_i),	

@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module top #(
+module fft_parallel #(
       parameter DIVISOR = 5,
       parameter N = 16,
       parameter Q = 8

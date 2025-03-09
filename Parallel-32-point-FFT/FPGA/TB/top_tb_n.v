@@ -210,65 +210,7 @@ top # (.N(N), .Q(Q)) top1
 	.out31_r(out31_r),
 	.out31_i(out31_i)
 );
-	// reg [N-1:0] in_ram [0:31];
-
-	// initial begin
-	// 	$readmemb(
-	// 		"/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/TB/in_ram.txt", 
-	// 		in_ram
-	// 	);
-		
-	// end
-
-    // initial begin
-	// 	in0_r = 16'b0000000100000000;
-	// 	in1_r = in_ram[1];
-	// 	in2_r = in_ram[2];
-	// 	in3_r = in_ram[3];
-	// 	in4_r = in_ram[4];
-	// 	in5_r = in_ram[5];
-	// 	in6_r = in_ram[6];
-	// 	in7_r = in_ram[7];
-	// 	in8_r = in_ram[8];
-	// 	in9_r = in_ram[9];
-	// 	in10_r = in_ram[10];
-	// 	in11_r = in_ram[11];
-	// 	in12_r = in_ram[12];
-	// 	in13_r = in_ram[13];
-	// 	in14_r = in_ram[14];
-	// 	in15_r = in_ram[15];
-	// 	in16_r = in_ram[16];
-	// 	in17_r = in_ram[17];
-	// 	in18_r = in_ram[18];
-	// 	in19_r = in_ram[19];
-	// 	in20_r = in_ram[20];
-	// 	in21_r = in_ram[21];
-	// 	in22_r = in_ram[22];
-	// 	in23_r = in_ram[23];
-	// 	in24_r = in_ram[24];
-	// 	in25_r = in_ram[25];
-	// 	in26_r = in_ram[26];
-	// 	in27_r = in_ram[27];
-	// 	in28_r = in_ram[28];
-	// 	in29_r = in_ram[29];
-	// 	in30_r = in_ram[30];
-	// 	in31_r = in_ram[31];
-    // end
-
-	// initial begin
-    //     clk2 = 0;
-    //     forever #20 clk2 = ~clk2;   
-    // end  
-
-    // initial begin
-    //  	rst = 1; 	
-	// 	#20
-	// 	rst = 0; 
-	// 	#400
-	// 	$finish;
-
-	// end  
-
+	
 
 	reg [N-1:0] in_ram1 [0:31];
 	reg [N-1:0] in_ram2 [0:31];
