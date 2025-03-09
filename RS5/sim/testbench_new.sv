@@ -320,27 +320,25 @@
     logic                           enable_ram_fft_runtime ;
     logic                           mem_write_enable_fft_runtime;
     logic [31:0]                    ram_address_in_fft_runtime;
-    // Lógica de controle para ler o arquivo e escrever os valores na RAM pela porta B
+    
     initial begin
         integer fd, ret;
         integer addr_counter, i;
-        // Usamos um registrador com sinal para comportar números negativos
         reg signed [31:0] value;  
         
-        reset = 1;                                          // RESET for CPU initialization 
-        #100 reset = 0;                                     // Hold state for 100 ns
-        // Inicializa os sinais de controle da porta B
+        reset = 1;            // RESET for FFT initialization 
+        #100 reset = 0;         
+        
         for (i = 0; i < 2; i = i + 1) begin
             enable_ram_fft_initial    = 1'b0;
             mem_write_enable_fft_initial = 1'h0;
-            ram_address_in_fft_initial = 32'd0;
-            fft_ram_in        = 32'd0;
+            ram_address_in_fft_initial = 32'b0;
+            fft_ram_in        = 32'b0;
             addr_counter        = 0;
             
-            // Aguardar um pequeno delay para estabilização (ou aguardar reset, se necessário)
             #10;
             @(posedge clk);
-            // Abre o arquivo contendo os valores
+            
             if( i == 0)begin
                 fd = $fopen(FFT_INPUT_REAL, "r");
                 $display("Real input read");
@@ -353,10 +351,9 @@
                 $display("ERROR: Não foi possível abrir o arquivo IN_imag_pattern05.txt");
                 $finish;
             end
-            // Lê o arquivo e escreve cada valor em um endereço consecutivo
-
+            
             while (!$feof(fd)) begin
-                ret = $fscanf(fd, "%d\n", value);  // Lê valor decimal (sendo possível ler números negativos)
+                ret = $fscanf(fd, "%d\n", value);  
                 if (ret != 1) begin
                     $display("Aviso: leitura inválida (ret = %0d) no arquivo", ret);
                     break;
@@ -364,19 +361,19 @@
                 
                 // Configura os sinais para a escrita:
                 if(addr_counter == 0)
-                    #1 ram_address_in_fft_initial    = addr_counter + i;         // endereços crescentes a partir de 0
+                    ram_address_in_fft_initial    = i;         
                 else
-                    ram_address_in_fft_initial    = addr_counter + i;         // endereços crescentes a partir de 0
+                    ram_address_in_fft_initial    = addr_counter + i;         
 
-                fft_ram_in                    = value[31:0];           // valor lido do arquivo
-                mem_write_enable_fft_initial  = 1'b1;                 // ativa escrita para os 4 bytes (escrita completa)
-                enable_ram_fft_initial        = 1'b1;                 // habilita a porta B para escrita
+                fft_ram_in                    = value[31:0];           
+                mem_write_enable_fft_initial  = 1'b1;                 
+                enable_ram_fft_initial        = 1'b1;               
                 
-                // Aguarda a borda de subida do clock para efetivar a escrita
+                
                 @(posedge clk);
                 
-                // Após o ciclo, desabilita o write para evitar escrita repetida
-                mem_write_enable_fft_initial = 4'h0;
+                
+                mem_write_enable_fft_initial = 1'b0;
                 enable_ram_fft_initial    = 1'b0;
                 
                 addr_counter = addr_counter + 2;
@@ -384,7 +381,7 @@
             $fclose(fd);
         end
 
-        ram_address_in_fft_initial = 32'd0;
+        ram_address_in_fft_initial = 32'b0;
         enable_ram_fft_initial    = 1'b1;
         
         $display("Finalizado o carregamento do arquivo na RAM.\nTotal de palavras escritas: %0d\n", addr_counter);
@@ -414,12 +411,6 @@
 
 
     always_comb begin
-        // Valores padrão
-        // clk_fft = 0;
-        // reset = 1;
-        // din_r = 12'b0;
-        // din_i = 12'b0;
-    
         clk_fft = clk;   
         if (accel_en) begin
             assign din_r = fft_ram_out_r[IN_width-1:0];
@@ -454,16 +445,14 @@
             enable_ram_fft_runtime <= 1'b0;
             ram_address_in_fft_runtime <= 32'b0;
         end 
-        ram_address_in_fft_runtime <= cycle_count;
+        if (ram_address_in_fft_initial == 32'b0)
+            ram_address_in_fft_runtime <= cycle_count;
+        else
+            ram_address_in_fft_runtime <= 0;
         // end
     end
     
-    // logic enable_ram_fft;
-    // logic mem_write_enable_fft;
     logic   [31:0]  ram_address_in_fft;
-    // Combina os sinais das fases inicial e runtime
-    // assign enable_ram_fft = enable_ram_fft_initial | enable_ram_fft_runtime;
-    // assign mem_write_enable_fft = mem_write_enable_fft_initial | mem_write_enable_fft_runtime;
     assign ram_address_in_fft = ram_address_in_fft_initial | ram_address_in_fft_runtime;
     
     logic rst;
@@ -471,8 +460,8 @@
 
 
     RAM_mem_16b #(
-            .MEM_WIDTH(128),
-            .WORD_WIDTH(16)
+        .MEM_WIDTH(128),
+        .WORD_WIDTH(16)
     ) RAM_FFT (
         .clk         (clk),
         .rst         (rst),
