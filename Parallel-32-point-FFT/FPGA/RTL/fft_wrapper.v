@@ -175,6 +175,7 @@ module fft_wrapper #
   (
     .rst    (rst)         ,
     .clk2   (clk)         ,
+    .out_en   (out_en)    ,
     .in0_r  (data00_int)  ,
     .in1_r  (data01_int)  ,
     .in2_r  (data02_int)  ,

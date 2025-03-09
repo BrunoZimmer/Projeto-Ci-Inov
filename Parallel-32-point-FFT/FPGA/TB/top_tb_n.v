@@ -5,8 +5,8 @@ module top_tb;
 	parameter Q = 8;
 	
 	reg 				rst;
-	//reg					clk;
 	reg					clk2;
+   	wire                 out_en;
 	
 	reg		[N-1:0]		in0_r;	
 	reg		[N-1:0]		in1_r;	
@@ -110,8 +110,8 @@ module top_tb;
 top # (.N(N), .Q(Q)) top1
 (
 	.rst(rst),
-	//.clk(clk),
 	.clk2(clk2),
+	.out_en(out_en),
 	.in0_r(in0_r),	
 	.in1_r(in1_r),	
 	.in2_r(in2_r),	
@@ -210,52 +210,175 @@ top # (.N(N), .Q(Q)) top1
 	.out31_r(out31_r),
 	.out31_i(out31_i)
 );
-  reg [N-1:0] in_ram [0:31];
-	initial
-	begin
-	$readmemb("/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/TB/in_ram.txt", in_ram);
+	// reg [N-1:0] in_ram [0:31];
+
+	// initial begin
+	// 	$readmemb(
+	// 		"/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/TB/in_ram.txt", 
+	// 		in_ram
+	// 	);
+		
+	// end
+
+    // initial begin
+	// 	in0_r = 16'b0000000100000000;
+	// 	in1_r = in_ram[1];
+	// 	in2_r = in_ram[2];
+	// 	in3_r = in_ram[3];
+	// 	in4_r = in_ram[4];
+	// 	in5_r = in_ram[5];
+	// 	in6_r = in_ram[6];
+	// 	in7_r = in_ram[7];
+	// 	in8_r = in_ram[8];
+	// 	in9_r = in_ram[9];
+	// 	in10_r = in_ram[10];
+	// 	in11_r = in_ram[11];
+	// 	in12_r = in_ram[12];
+	// 	in13_r = in_ram[13];
+	// 	in14_r = in_ram[14];
+	// 	in15_r = in_ram[15];
+	// 	in16_r = in_ram[16];
+	// 	in17_r = in_ram[17];
+	// 	in18_r = in_ram[18];
+	// 	in19_r = in_ram[19];
+	// 	in20_r = in_ram[20];
+	// 	in21_r = in_ram[21];
+	// 	in22_r = in_ram[22];
+	// 	in23_r = in_ram[23];
+	// 	in24_r = in_ram[24];
+	// 	in25_r = in_ram[25];
+	// 	in26_r = in_ram[26];
+	// 	in27_r = in_ram[27];
+	// 	in28_r = in_ram[28];
+	// 	in29_r = in_ram[29];
+	// 	in30_r = in_ram[30];
+	// 	in31_r = in_ram[31];
+    // end
+
+	// initial begin
+    //     clk2 = 0;
+    //     forever #20 clk2 = ~clk2;   
+    // end  
+
+    // initial begin
+    //  	rst = 1; 	
+	// 	#20
+	// 	rst = 0; 
+	// 	#400
+	// 	$finish;
+
+	// end  
+
+
+	reg [N-1:0] in_ram1 [0:31];
+	reg [N-1:0] in_ram2 [0:31];
+
+	initial begin
+		$readmemb(
+			"/home/ic/bruno.zimmer/Documents/Projeto/Parallel-32-point-FFT/FPGA/TB/in_ram1.txt", 
+			in_ram1
+		);
+
+		$readmemb(
+			"/home/ic/bruno.zimmer/Documents/Projeto/Parallel-32-point-FFT/FPGA/TB/in_ram2.txt", 
+			in_ram2
+		);
+		
 	end
+
     initial begin
-		in0_r = 16'b0000000100000000;
-		in1_r = in_ram[1];
-		in2_r = in_ram[2];
-		in3_r = in_ram[3];
-		in4_r = in_ram[4];
-		in5_r = in_ram[5];
-		in6_r = in_ram[6];
-		in7_r = in_ram[7];
-		in8_r = in_ram[8];
-		in9_r = in_ram[9];
-		in10_r = in_ram[10];
-		in11_r = in_ram[11];
-		in12_r = in_ram[12];
-		in13_r = in_ram[13];
-		in14_r = in_ram[14];
-		in15_r = in_ram[15];
-		in16_r = in_ram[16];
-		in17_r = in_ram[17];
-		in18_r = in_ram[18];
-		in19_r = in_ram[19];
-		in20_r = in_ram[20];
-		in21_r = in_ram[21];
-		in22_r = in_ram[22];
-		in23_r = in_ram[23];
-		in24_r = in_ram[24];
-		in25_r = in_ram[25];
-		in26_r = in_ram[26];
-		in27_r = in_ram[27];
-		in28_r = in_ram[28];
-		in29_r = in_ram[29];
-		in30_r = in_ram[30];
-		in31_r = in_ram[31];
+		in0_r = in_ram1[0];
+		in1_r = in_ram1[1];
+		in2_r = in_ram1[2];
+		in3_r = in_ram1[3];
+		in4_r = in_ram1[4];
+		in5_r = in_ram1[5];
+		in6_r = in_ram1[6];
+		in7_r = in_ram1[7];
+		in8_r = in_ram1[8];
+		in9_r = in_ram1[9];
+		in10_r = in_ram1[10];
+		in11_r = in_ram1[11];
+		in12_r = in_ram1[12];
+		in13_r = in_ram1[13];
+		in14_r = in_ram1[14];
+		in15_r = in_ram1[15];
+		in16_r = in_ram1[16];
+		in17_r = in_ram1[17];
+		in18_r = in_ram1[18];
+		in19_r = in_ram1[19];
+		in20_r = in_ram1[20];
+		in21_r = in_ram1[21];
+		in22_r = in_ram1[22];
+		in23_r = in_ram1[23];
+		in24_r = in_ram1[24];
+		in25_r = in_ram1[25];
+		in26_r = in_ram1[26];
+		in27_r = in_ram1[27];
+		in28_r = in_ram1[28];
+		in29_r = in_ram1[29];
+		in30_r = in_ram1[30];
+		in31_r = in_ram1[31];
     end
+
 	initial begin
         clk2 = 0;
         forever #20 clk2 = ~clk2;   
     end  
+
     initial begin
      	rst = 1; 	
-	#20
+		#20
 		rst = 0; 
+		#400
+		$display("Valor de in0_r %d", in0_r);
+		$display("Valor de in1_r %d", in1_r);
+		$display("Valor de in31_r %d", in31_r);
+
+
+
+     	rst = 1; 	
+		#20
+		rst = 0; 
+		in0_r = in_ram2[0];
+		in1_r = in_ram2[1];
+		in2_r = in_ram2[2];
+		in3_r = in_ram2[3];
+		in4_r = in_ram2[4];
+		in5_r = in_ram2[5];
+		in6_r = in_ram2[6];
+		in7_r = in_ram2[7];
+		in8_r = in_ram2[8];
+		in9_r = in_ram2[9];
+		in10_r = in_ram2[10];
+		in11_r = in_ram2[11];
+		in12_r = in_ram2[12];
+		in13_r = in_ram2[13];
+		in14_r = in_ram2[14];
+		in15_r = in_ram2[15];
+		in16_r = in_ram2[16];
+		in17_r = in_ram2[17];
+		in18_r = in_ram2[18];
+		in19_r = in_ram2[19];
+		in20_r = in_ram2[20];
+		in21_r = in_ram2[21];
+		in22_r = in_ram2[22];
+		in23_r = in_ram2[23];
+		in24_r = in_ram2[24];
+		in25_r = in_ram2[25];
+		in26_r = in_ram2[26];
+		in27_r = in_ram2[27];
+		in28_r = in_ram2[28];
+		in29_r = in_ram2[29];
+		in30_r = in_ram2[30];
+		in31_r = in_ram2[31];
+		$display("\n\n\n");
+		$display("Valor de in0_r %d", in0_r);
+		$display("Valor de in1_r %d", in1_r);
+		$display("Valor de in31_r %d", in31_r);
+		#400
+
+		$finish;
+
 	end  
 endmodule

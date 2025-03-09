@@ -112,6 +112,7 @@ top # (.N(N), .Q(Q)) top1
 	.rst(rst),
 	//.clk(clk),
 	.clk2(clk2),
+	.out_en(out_en),
 	.in0_r(in0_r),	
 	.in1_r(in1_r),	
 	.in2_r(in2_r),	
