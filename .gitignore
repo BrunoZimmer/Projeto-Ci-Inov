@@ -53,7 +53,9 @@ sim/obj_dir
 *.lst
 *.bin
 *.elf
+*.history
 *.jou
+*.key
 *.log
 *.str
 *.tmp
