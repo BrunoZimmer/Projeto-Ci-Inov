@@ -1,0 +1,17 @@
+0.7
+2020.2
+Oct 13 2023
+20:21:30
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/adder3_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/butterfly2_n.v,,adder3,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/butterfly2_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/clk_div.v,,butterfly2,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/clk_div.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/control_unit.v,,Clk_div,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/control_unit.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/get_negative_n.v,,control_unit,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/get_negative_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/multiplier_n.v,,get_negative,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/multiplier_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/mux_n.v,,multiplier,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/mux_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/pipling_stage_n.v,,mux,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/pipling_stage_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/top_n.v,,pipeline_stage,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/top_n.v,1738434907,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/twiddle_rom_imag_n.v,,top,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/twiddle_rom_imag_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/twiddle_rom_real_n.v,,twiddle_rom_imag,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/RTL/twiddle_rom_real_n.v,1738420756,verilog,,/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/fft_dev/fft_dev.srcs/sim_1/imports/TB/top_tb_n.v,,twiddle_rom_real,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/fft_dev/fft_dev.sim/sim_1/behav/xsim/glbl.v,1697210495,verilog,,,,glbl,,,,,,,,
+/home/ic/bruno.zimmer/Documents/Projeto/32-point-FFT-Verilog-design-based-DIT-butterfly-algorithm/FPGA/fft_dev/fft_dev.srcs/sim_1/imports/TB/top_tb_n.v,1738435764,verilog,,,,top_tb,,,,,,,,
