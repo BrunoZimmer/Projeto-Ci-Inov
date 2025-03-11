@@ -28,8 +28,8 @@ mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor or
 #
 # Design Browser windows
 #
-if {[catch {window new WatchList -name "Design Browser 1" -geometry 1920x993+-1+26}] != ""} {
-    window geometry "Design Browser 1" 1920x993+-1+26
+if {[catch {window new WatchList -name "Design Browser 1" -geometry 1440x817+-1+26}] != ""} {
+    window geometry "Design Browser 1" 1440x817+-1+26
 }
 window target "Design Browser 1" on
 browser using {Design Browser 1}
@@ -42,8 +42,8 @@ browser timecontrol set -lock 0
 #
 # Waveform windows
 #
-if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1010x600+28+57}] != ""} {
-    window geometry "Waveform 1" 1010x600+28+57
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1010x600+18+46}] != ""} {
+    window geometry "Waveform 1" 1010x600+18+46
 }
 window target "Waveform 1" on
 waveform using {Waveform 1}
@@ -76,7 +76,7 @@ waveform xview limits 21551250ps 35918750ps
 # Console windows
 #
 console set -windowname Console
-window geometry Console 730x250+261+564
+window geometry Console 730x250+185+462
 
 #
 # Layout selection

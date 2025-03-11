@@ -50,4 +50,4 @@ alias quit exit
 database -open -shm -into waves.shm waves -default -event
 probe -create -database waves testbench.accel_en testbench.out_en testbench.out_valid
 
-simvision -input /home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.1/sim_xcelium/.simvision/1224156_bruno.zimmer__autosave.tcl.svcf
+simvision -input /home/ic/bruno.zimmer/Documents/Projeto/RS5-v2/sim_xcelium/.simvision/1224156_bruno.zimmer__autosave.tcl.svcf
