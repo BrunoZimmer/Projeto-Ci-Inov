@@ -2,33 +2,12 @@
 
 +incdir+$(CURRENT_PATH)/../rtl
 +incdir+$(CURRENT_PATH)/../sim
-+incdir+$(CURRENT_PATH)/../rtl/fft_acc
 
 $(CURRENT_PATH)/../rtl/aes/riscv_crypto_aes_fwd_sbox.sv
 $(CURRENT_PATH)/../rtl/aes/riscv_crypto_aes_sbox.sv
 $(CURRENT_PATH)/../rtl/aes/riscv_crypto_sbox_aes_out.sv
 $(CURRENT_PATH)/../rtl/aes/riscv_crypto_sbox_aes_top.sv
 $(CURRENT_PATH)/../rtl/aes/riscv_crypto_sbox_inv_mid.sv
-
-
-$(CURRENT_PATH)/../rtl/fft_acc/adder3_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/butterfly2_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/butterfly4_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/butterfly8_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/butterfly16_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/butterfly32_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/clk_div.v 
-$(CURRENT_PATH)/../rtl/fft_acc/control_unit.v 
-$(CURRENT_PATH)/../rtl/fft_acc/fft_wrapper.v 
-$(CURRENT_PATH)/../rtl/fft_acc/get_negative_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/m_ram.v 
-$(CURRENT_PATH)/../rtl/fft_acc/multiplier_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/mux_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/pipling_stage_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/s_ram.v 
-$(CURRENT_PATH)/../rtl/fft_acc/twiddle_rom_imag_n.v 
-$(CURRENT_PATH)/../rtl/fft_acc/twiddle_rom_real_n.v
-$(CURRENT_PATH)/../rtl/fft_acc/top_n.v 
 
 $(CURRENT_PATH)/../rtl/aes_unit.sv 
 $(CURRENT_PATH)/../rtl/amo.sv 
@@ -52,11 +31,7 @@ $(CURRENT_PATH)/../rtl/vectorALU.sv
 $(CURRENT_PATH)/../rtl/vectorCSRs.sv 
 $(CURRENT_PATH)/../rtl/vectorLSU.sv 
 $(CURRENT_PATH)/../rtl/vectorRegbank.sv 
-$(CURRENT_PATH)/../rtl/vectorUnit.sv 
-
-
-
+$(CURRENT_PATH)/../rtl/vectorUnit.sv
 
 $(CURRENT_PATH)/../sim/RAM_mem.sv
-$(CURRENT_PATH)/../sim/RAM_mem_16b.sv
 $(CURRENT_PATH)/../sim/testbench.sv

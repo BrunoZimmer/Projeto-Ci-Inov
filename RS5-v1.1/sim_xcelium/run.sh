@@ -12,5 +12,4 @@ else
   VERBOSITY="+UVM_VERBOSITY=$1"
 fi
 
-# xrun -lwdgen -access rwc $UVMHOME -f file_list.f ${VERBOSITY} -input probes.tcl -gui -ALLOWREDEFINITION
-xrun -lwdgen -access rwc $UVMHOME -f file_list.f ${VERBOSITY} -input probes.tcl -ALLOWREDEFINITION
+xrun -lwdgen -access rwc $UVMHOME -sv -f file_list.f ${VERBOSITY} -input probes.tcl -gui -ALLOWREDEFINITION

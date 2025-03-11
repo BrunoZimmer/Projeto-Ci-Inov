@@ -195,7 +195,6 @@ module testbench
         .mem_address_o          (mem_address),
         .mem_data_o             (mem_data_write),
         .interrupt_ack_o        (interrupt_ack),
-        .accel_input             (accel_input),
         .accel_en                (accel_en)
     );
 
