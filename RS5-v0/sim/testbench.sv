@@ -47,7 +47,8 @@ module testbench
 `endif
 
     localparam int           MEM_WIDTH       = 65_536;
-    localparam string        BIN_FILE        = "../app/exercicio/exercicio.bin";
+    localparam string        BIN_FILE        = "../app/fft_test_parallel/fft_test_parallel.bin";
+    // localparam string        BIN_FILE        = "../app/fft_test_serie/fft_test_serie.bin";
 
     localparam int           i_cnt = 1;
 
@@ -225,32 +226,6 @@ module testbench
         .dataB_o    (data_ram)
     );
 
-//////////////////////////////////////////////////////////////////////////////
-// RAM
-//////////////////////////////////////////////////////////////////////////////
-
-    RAM_mem #(
-    `ifndef SYNTH
-        .DEBUG     (DEBUG     ),
-        .DEBUG_PATH("./debug/"),
-    `endif
-        .MEM_WIDTH(MEM_WIDTH  ),
-        .BIN_FILE (BIN_FILE   )
-    ) RAM_MEM (
-        .clk        (clk),
-
-        .enA_i      (1'b1),
-        .weA_i      (4'h0),
-        .addrA_i    (instruction_address[($clog2(MEM_WIDTH) - 1):0]),
-        .dataA_i    (32'h00000000),
-        .dataA_o    (instruction),
-
-        .enB_i      (enable_ram),
-        .weB_i      (mem_write_enable),
-        .addrB_i    (mem_address[($clog2(MEM_WIDTH) - 1):0]),
-        .dataB_i    (mem_data_write),
-        .dataB_o    (data_ram)
-    );
 //////////////////////////////////////////////////////////////////////////////
 // PLIC
 //////////////////////////////////////////////////////////////////////////////
