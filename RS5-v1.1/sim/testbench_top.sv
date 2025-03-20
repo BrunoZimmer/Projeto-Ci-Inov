@@ -41,10 +41,10 @@
      localparam int           VLEN            = 256;
      localparam bit           BRANCHPRED      = 1'b1;
  
- `ifndef SYNTH
-     localparam bit           PROFILING       = 1'b1;
-     localparam bit           DEBUG           = 1'b0;
- `endif
+//  `ifndef SYNTH
+//      localparam bit           PROFILING       = 1'b1;
+//      localparam bit           DEBUG           = 1'b0;
+//  `endif
  
      localparam int           MEM_WIDTH       = 65_536;
      localparam string        BIN_FILE        = "../app/fft_test/fft_test.bin";
@@ -169,10 +169,10 @@
  //////////////////////////////////////////////////////////////////////////////
  
      RS5 #(
-     `ifndef SYNTH
-         .DEBUG      (DEBUG          ),
-         .PROFILING  (PROFILING      ),
-     `endif
+    //  `ifndef SYNTH
+    //      .DEBUG      (DEBUG          ),
+    //      .PROFILING  (PROFILING      ),
+    //  `endif
          .Environment(ASIC           ),
          .MULEXT     (MULEXT         ),
          .AMOEXT     (AMOEXT         ),
@@ -206,10 +206,10 @@
  //////////////////////////////////////////////////////////////////////////////
  
      RAM_mem #(
-     `ifndef SYNTH
-         .DEBUG     (DEBUG     ),
-         .DEBUG_PATH("../sim/debug/"),
-     `endif
+    //  `ifndef SYNTH
+    //      .DEBUG     (DEBUG     ),
+    //      .DEBUG_PATH("../sim/debug/"),
+    //  `endif
          .MEM_WIDTH(MEM_WIDTH  ),
          .BIN_FILE (BIN_FILE   )
      ) RAM_MEM (
@@ -482,6 +482,39 @@
         .out_valid(accel_out_en),   // 1  bits
         .dout_r(accel_dout_r),      // 16 bits
         .dout_i(accel_dout_i)       // 16 bits
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    top  dut (
+        .clk                    (clk),
+        .reset_n                (reset_n),
+        .sys_reset_i            (1'b0),
+        .stall                  (1'b0),
+        .instruction_i          (instruction),
+        .mem_data_i             (mem_data_read),
+        .mtime_i                (mtime),
+        .irq_i                  (irq),
+        .instruction_address_o  (instruction_address),
+        .mem_operation_enable_o (mem_operation_enable),
+        .mem_write_enable_o     (mem_write_enable),
+        .mem_address_o          (mem_address),
+        .mem_data_o             (mem_data_write),
+        .interrupt_ack_o        (interrupt_ack),
+        .accel_en                (accel_en)
     );
 
 

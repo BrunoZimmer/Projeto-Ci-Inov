@@ -16,7 +16,7 @@ module RAM_mem_16b
     input  logic                             rst,
     input  logic                             en_i,
     input  logic                             we_i,
-    input  logic [($clog2(MEM_WIDTH) - 1):0] addr_i,
+    input  logic [15:0]                      addr_i,
     input  logic [31:0]                      data_i,
     output logic [31:0]                      data_o_a,
     output logic [31:0]                      data_o_b

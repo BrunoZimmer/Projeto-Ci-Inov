@@ -11,16 +11,16 @@
 // LastEditTime: 2021-17-18 15:16:50
 // ********************************************************************
 // Module Function
-`include "shift_16.v"
-`include "shift_8.v"
-`include "shift_4.v"
-`include "shift_2.v"
-`include "shift_1.v"
-`include "radix2.v"
-`include "ROM_16.v"
-`include "ROM_8.v"
-`include "ROM_4.v"
-`include "ROM_2.v"
+`include "shift_16.sv"
+`include "shift_8.sv"
+`include "shift_4.sv"
+`include "shift_2.sv"
+`include "shift_1.sv"
+`include "radix2.sv"
+`include "ROM_16.sv"
+`include "ROM_8.sv"
+`include "ROM_4.sv"
+`include "ROM_2.sv"
 
 `timescale 1ns/10ps
 module FFT(
