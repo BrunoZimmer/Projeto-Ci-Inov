@@ -17,7 +17,7 @@ VERILATOR_FLAGS += -Wall
 #VERILATOR_FLAGS += --gdbbt
 
 # Input files for Verilator
-VERILATOR_INPUT = testbench.sv
+VERILATOR_INPUT = testbench_top.sv
 
 default: run
 

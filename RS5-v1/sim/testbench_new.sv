@@ -41,10 +41,10 @@
      localparam int           VLEN            = 256;
      localparam bit           BRANCHPRED      = 1'b1;
  
- `ifndef SYNTH
-     localparam bit           PROFILING       = 1'b1;
-     localparam bit           DEBUG           = 1'b0;
- `endif
+//  `ifndef SYNTH
+//      localparam bit           PROFILING       = 1'b1;
+//      localparam bit           DEBUG           = 1'b0;
+//  `endif
  
      localparam int           MEM_WIDTH       = 65_536;
      localparam string        BIN_FILE        = "../app/fft_test/fft_test.bin";
@@ -68,8 +68,6 @@
  
      initial begin
          reset_n = 0;                                          // RESET for CPU initialization
-         
- 
          #100 reset_n = 1;                                     // Hold state for 100 ns
      end
  
@@ -165,51 +163,14 @@
      end
  
  //////////////////////////////////////////////////////////////////////////////
- // CPU
- //////////////////////////////////////////////////////////////////////////////
- 
-     RS5 #(
-     `ifndef SYNTH
-         .DEBUG      (DEBUG          ),
-         .PROFILING  (PROFILING      ),
-     `endif
-         .Environment(ASIC           ),
-         .MULEXT     (MULEXT         ),
-         .AMOEXT     (AMOEXT         ),
-         .COMPRESSED (COMPRESSED     ),
-         .VEnable    (VEnable        ),
-         .VLEN       (VLEN           ),
-         .XOSVMEnable(USE_XOSVM      ),
-         .ZIHPMEnable(USE_ZIHPM      ),
-         .ZKNEEnable (USE_ZKNE       ),
-         .BRANCHPRED (BRANCHPRED     )
-     ) dut (
-         .clk                    (clk),
-         .reset_n                (reset_n),
-         .sys_reset_i            (1'b0),
-         .stall                  (1'b0),
-         .instruction_i          (instruction),
-         .mem_data_i             (mem_data_read),
-         .mtime_i                (mtime),
-         .irq_i                  (irq),
-         .instruction_address_o  (instruction_address),
-         .mem_operation_enable_o (mem_operation_enable),
-         .mem_write_enable_o     (mem_write_enable),
-         .mem_address_o          (mem_address),
-         .mem_data_o             (mem_data_write),
-         .interrupt_ack_o        (interrupt_ack),
-         .accel_en                (accel_en)
-     );
- 
- //////////////////////////////////////////////////////////////////////////////
  // RAM
  //////////////////////////////////////////////////////////////////////////////
  
      RAM_mem #(
-     `ifndef SYNTH
-         .DEBUG     (DEBUG     ),
-         .DEBUG_PATH("../sim/debug/"),
-     `endif
+    //  `ifndef SYNTH
+    //      .DEBUG     (DEBUG     ),
+    //      .DEBUG_PATH("../sim/debug/"),
+    //  `endif
          .MEM_WIDTH(MEM_WIDTH  ),
          .BIN_FILE (BIN_FILE   )
      ) RAM_MEM (
@@ -393,9 +354,9 @@
     ////////////////////////////////////////////////////////////////////////////
     
     // FFT VARIABLES
-    parameter IN_width		= 12;
-    parameter OUT_width		= 16;
-    logic reset_runtime;
+    parameter                       IN_width		= 12;
+    parameter                       OUT_width		= 16;
+    logic                           reset_runtime;
     logic                           accel_out_en;      // 1  bits
     logic        [OUT_width-1:0]    accel_dout_r;      // 16 bits
     logic        [OUT_width-1:0]    accel_dout_i;       // 16 bits
@@ -484,5 +445,42 @@
         .dout_i(accel_dout_i)       // 16 bits
     );
 
+ //////////////////////////////////////////////////////////////////////////////
+ // CPU
+ //////////////////////////////////////////////////////////////////////////////
+ 
+    RS5 #(
+        //  `ifndef SYNTH
+        //      .DEBUG      (DEBUG          ),
+        //      .PROFILING  (PROFILING      ),
+        //  `endif
+             .Environment(ASIC           ),
+             .MULEXT     (MULEXT         ),
+             .AMOEXT     (AMOEXT         ),
+             .COMPRESSED (COMPRESSED     ),
+             .VEnable    (VEnable        ),
+             .VLEN       (VLEN           ),
+             .XOSVMEnable(USE_XOSVM      ),
+             .ZIHPMEnable(USE_ZIHPM      ),
+             .ZKNEEnable (USE_ZKNE       ),
+             .BRANCHPRED (BRANCHPRED     )
+         ) dut (
+             .clk                    (clk),
+             .reset_n                (reset_n),
+             .sys_reset_i            (1'b0),
+             .stall                  (1'b0),
+             .instruction_i          (instruction),
+             .mem_data_i             (mem_data_read),
+             .mtime_i                (mtime),
+             .irq_i                  (irq),
+             .instruction_address_o  (instruction_address),
+             .mem_operation_enable_o (mem_operation_enable),
+             .mem_write_enable_o     (mem_write_enable),
+             .mem_address_o          (mem_address),
+             .mem_data_o             (mem_data_write),
+             .interrupt_ack_o        (interrupt_ack),
+             .accel_en                (accel_en)
+         );
+     
 
 endmodule

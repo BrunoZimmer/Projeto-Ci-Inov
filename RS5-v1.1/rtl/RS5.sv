@@ -58,7 +58,16 @@
     output logic [31:0]             mem_address_o,
     output logic [31:0]             mem_data_o,
     output logic                    interrupt_ack_o,
-    output  logic                   accel_en
+    output logic                    accel_en,
+
+
+    input logic  [31:0]             fft_ram_out_i,
+    input logic  [31:0]             fft_ram_out_r,
+    input logic                     rst,
+    
+    output logic                    accel_out_en, 
+    output logic  [15:0]            accel_dout_r,   
+    output logic  [15:0]            accel_dout_i  
  );
  
  //////////////////////////////////////////////////////////////////////////////
@@ -467,6 +476,8 @@
          .mvmim_o                    (mvmim)
      );
  
+    
+    
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  /////////////////////////////////////////////////////////// MEMORY SIGNALS //////////////////////////////////////////////////////////////////////////
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -496,4 +507,18 @@
  
      assign mem_write_enable_o = mem_write_enable;
  
+
+
+
+// FFT DECLARATION
+     FFT FFT_CORE(
+        .clk                    (clk),
+        .reset                  (rst),                      // RESET INVERTIDO
+        .in_valid               (accel_en),                 // 1  bits
+        .din_r                  (fft_ram_out_i[11:0]),              // 12 bits  
+        .din_i                  (fft_ram_out_r[11:0]),              // 12 bits
+        .out_valid              (accel_out_en),             // 1  bits
+        .dout_r                 (accel_dout_r),             // 16 bits
+        .dout_i                 (accel_dout_i)              // 16 bits
+    );
  endmodule

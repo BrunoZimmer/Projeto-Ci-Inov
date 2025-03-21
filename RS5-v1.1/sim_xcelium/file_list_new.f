@@ -1,8 +1,8 @@
 
 
 +incdir+$(CURRENT_PATH)/../rtl
-+incdir+$(CURRENT_PATH)/../sim
 +incdir+$(CURRENT_PATH)/../rtl/fft_acc
++incdir+$(CURRENT_PATH)/../sim
 
 $(CURRENT_PATH)/../rtl/aes/riscv_crypto_aes_fwd_sbox.sv
 $(CURRENT_PATH)/../rtl/aes/riscv_crypto_aes_sbox.sv
@@ -32,20 +32,19 @@ $(CURRENT_PATH)/../rtl/vectorALU.sv
 $(CURRENT_PATH)/../rtl/vectorCSRs.sv 
 $(CURRENT_PATH)/../rtl/vectorLSU.sv 
 $(CURRENT_PATH)/../rtl/vectorRegbank.sv 
-$(CURRENT_PATH)/../rtl/vectorUnit.sv 
+$(CURRENT_PATH)/../rtl/vectorUnit.sv
 
-
-$(CURRENT_PATH)/../rtl/fft_acc/ROM_2.v
-$(CURRENT_PATH)/../rtl/fft_acc/ROM_4.v
-$(CURRENT_PATH)/../rtl/fft_acc/ROM_8.v
-$(CURRENT_PATH)/../rtl/fft_acc/ROM_16.v
-$(CURRENT_PATH)/../rtl/fft_acc/shift_1.v
-$(CURRENT_PATH)/../rtl/fft_acc/shift_2.v
-$(CURRENT_PATH)/../rtl/fft_acc/shift_4.v
-$(CURRENT_PATH)/../rtl/fft_acc/shift_8.v
-$(CURRENT_PATH)/../rtl/fft_acc/shift_16.v
-$(CURRENT_PATH)/../rtl/fft_acc/radix2.v
-$(CURRENT_PATH)/../rtl/fft_acc/FFT.v
+$(CURRENT_PATH)/../rtl/fft_acc/ROM_2.sv
+$(CURRENT_PATH)/../rtl/fft_acc/ROM_4.sv
+$(CURRENT_PATH)/../rtl/fft_acc/ROM_8.sv
+$(CURRENT_PATH)/../rtl/fft_acc/ROM_16.sv
+$(CURRENT_PATH)/../rtl/fft_acc/shift_1.sv
+$(CURRENT_PATH)/../rtl/fft_acc/shift_2.sv
+$(CURRENT_PATH)/../rtl/fft_acc/shift_4.sv
+$(CURRENT_PATH)/../rtl/fft_acc/shift_8.sv
+$(CURRENT_PATH)/../rtl/fft_acc/shift_16.sv
+$(CURRENT_PATH)/../rtl/fft_acc/radix2.sv
+$(CURRENT_PATH)/../rtl/FFT.sv
 
 
 $(CURRENT_PATH)/../sim/RAM_mem.sv
