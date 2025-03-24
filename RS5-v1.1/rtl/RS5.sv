@@ -24,12 +24,12 @@
  module RS5
      import RS5_pkg::*;
  #(
-//  `ifndef SYNTH
-//      parameter bit           DEBUG          = 1'b0,
-//      parameter string        DBG_REG_FILE   = "../sim/debug/regBank.txt",
-//      parameter bit           PROFILING      = 1'b0,
-//      parameter string        PROFILING_FILE = "../sim/debug/Report.txt",
-//  `endif
+ `ifndef SYNTH
+     parameter bit           DEBUG          = 1'b0,
+     parameter string        DBG_REG_FILE   = "../sim/debug/regBank.txt",
+     parameter bit           PROFILING      = 1'b0,
+     parameter string        PROFILING_FILE = "../sim/debug/Report.txt",
+ `endif
      parameter environment_e Environment    = ASIC,
      parameter mul_e         MULEXT         = MUL_M,
      parameter atomic_e      AMOEXT         = AMO_A,
@@ -313,10 +313,10 @@
      end
      else begin : RegFileFF_blk
          regbank #(
-        //  `ifndef SYNTH
-        //      .DEBUG      (DEBUG       ),
-        //      .DBG_FILE   (DBG_REG_FILE)
-        //  `endif
+         `ifndef SYNTH
+             .DEBUG      (DEBUG       ),
+             .DBG_FILE   (DBG_REG_FILE)
+         `endif
          ) regbankff (
              .clk        (clk),
              .reset_n    (reset_n),
@@ -421,10 +421,10 @@
  /////////////////////////////////////////////////////////// CSRs BANK ///////////////////////////////////////////////////////////////////////////////
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      CSRBank #(
-    //  `ifndef SYNTH
-    //      .PROFILING     (PROFILING     ),
-    //      .PROFILING_FILE(PROFILING_FILE),
-    //  `endif
+     `ifndef SYNTH
+         .PROFILING     (PROFILING     ),
+         .PROFILING_FILE(PROFILING_FILE),
+     `endif
          .XOSVMEnable   (XOSVMEnable   ),
          .ZIHPMEnable   (ZIHPMEnable   ),
          .COMPRESSED    (COMPRESSED    ),

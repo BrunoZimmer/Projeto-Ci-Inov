@@ -41,10 +41,10 @@
      localparam int           VLEN            = 256;
      localparam bit           BRANCHPRED      = 1'b1;
  
-//  `ifndef SYNTH
-//      localparam bit           PROFILING       = 1'b1;
-//      localparam bit           DEBUG           = 1'b0;
-//  `endif
+ `ifndef SYNTH
+     localparam bit           PROFILING       = 1'b1;
+     localparam bit           DEBUG           = 1'b0;
+ `endif
  
      localparam int           MEM_WIDTH       = 65_536;
      localparam string        BIN_FILE        = "../app/fft_test/fft_test.bin";
@@ -167,10 +167,10 @@
  //////////////////////////////////////////////////////////////////////////////
  
      RAM_mem #(
-    //  `ifndef SYNTH
-    //      .DEBUG     (DEBUG     ),
-    //      .DEBUG_PATH("../sim/debug/"),
-    //  `endif
+     `ifndef SYNTH
+         .DEBUG     (DEBUG     ),
+         .DEBUG_PATH("../sim/debug/"),
+     `endif
          .MEM_WIDTH(MEM_WIDTH  ),
          .BIN_FILE (BIN_FILE   )
      ) RAM_MEM (
@@ -450,10 +450,10 @@
  //////////////////////////////////////////////////////////////////////////////
  
     RS5 #(
-        //  `ifndef SYNTH
-        //      .DEBUG      (DEBUG          ),
-        //      .PROFILING  (PROFILING      ),
-        //  `endif
+         `ifndef SYNTH
+             .DEBUG      (DEBUG          ),
+             .PROFILING  (PROFILING      ),
+         `endif
             .Environment(ASIC           ),
             .MULEXT     (MULEXT         ),
             .AMOEXT     (AMOEXT         ),

@@ -29,10 +29,10 @@
 module CSRBank
     import RS5_pkg::*;
 #(
-// `ifndef SYNTH
-//     parameter bit       PROFILING      = 1'b0,
-//     parameter string    PROFILING_FILE = "./debug/Report.txt",
-// `endif
+`ifndef SYNTH
+    parameter bit       PROFILING      = 1'b0,
+    parameter string    PROFILING_FILE = "./debug/Report.txt",
+`endif
     parameter bit       XOSVMEnable    = 1'b0,
     parameter bit       ZIHPMEnable    = 1'b0,
     parameter bit       COMPRESSED     = 1'b0,
@@ -734,63 +734,63 @@ module CSRBank
             end
         end
         
-    // `ifndef SYNTH
-    //     if (PROFILING) begin : gen_csr_dbg
-    //         int fd;
+    `ifndef SYNTH
+        if (PROFILING) begin : gen_csr_dbg
+            int fd;
 
-    //         initial begin
-    //             fd = $fopen(PROFILING_FILE, "w");
-    //             if (fd == 0) begin
-    //                 $display("Error\ opening profiling file");
-    //             end
-    //         end
+            initial begin
+                fd = $fopen(PROFILING_FILE, "w");
+                if (fd == 0) begin
+                    $display("Error\ opening profiling file");
+                end
+            end
 
-    //         final begin
-    //             $fwrite(fd,"Clock Cycles:            %0d\n", mcycle);
-    //             $fwrite(fd,"Instructions Retired:    %0d\n", minstret);
-    //             if (COMPRESSED == 1'b1) begin
-    //                 $fwrite(fd,"Instructions Compressed: %0d\n", compressed_counter);
-    //             end
-    //             $fwrite(fd,"Instructions Killed:     %0d\n", instructions_killed_counter);
-    //             $fwrite(fd,"Context Switches:        %0d\n", context_switch_counter);
-    //             $fwrite(fd,"Exceptions Raised:       %0d\n", raise_exception_counter);
-    //             $fwrite(fd,"Interrupts Acked:        %0d\n", interrupt_ack_counter);
-    //             if (COMPRESSED == 1'b1) begin
-    //                 $fwrite(fd,"Misaligned Jumps:        %0d\n", jump_misaligned_counter);
-    //             end
+            final begin
+                $fwrite(fd,"Clock Cycles:            %0d\n", mcycle);
+                $fwrite(fd,"Instructions Retired:    %0d\n", minstret);
+                if (COMPRESSED == 1'b1) begin
+                    $fwrite(fd,"Instructions Compressed: %0d\n", compressed_counter);
+                end
+                $fwrite(fd,"Instructions Killed:     %0d\n", instructions_killed_counter);
+                $fwrite(fd,"Context Switches:        %0d\n", context_switch_counter);
+                $fwrite(fd,"Exceptions Raised:       %0d\n", raise_exception_counter);
+                $fwrite(fd,"Interrupts Acked:        %0d\n", interrupt_ack_counter);
+                if (COMPRESSED == 1'b1) begin
+                    $fwrite(fd,"Misaligned Jumps:        %0d\n", jump_misaligned_counter);
+                end
 
-    //             $fwrite(fd,"\nCYCLES WITH::\n");
-    //             $fwrite(fd,"HAZARDS:                 %0d\n", hazard_counter);
-    //             $fwrite(fd,"STALL:                   %0d\n", stall_counter);
-    //             $fwrite(fd,"BUBBLES (INC. HAZARDS):  %0d\n", nop_counter);
+                $fwrite(fd,"\nCYCLES WITH::\n");
+                $fwrite(fd,"HAZARDS:                 %0d\n", hazard_counter);
+                $fwrite(fd,"STALL:                   %0d\n", stall_counter);
+                $fwrite(fd,"BUBBLES (INC. HAZARDS):  %0d\n", nop_counter);
 
-    //             $fwrite(fd,"\nINSTRUCTION COUNTERS:\n");
-    //             $fwrite(fd,"LUI_SLT:                 %0d\n", lui_slt_counter);
-    //             $fwrite(fd,"LOGIC:                   %0d\n", logic_counter);
-    //             $fwrite(fd,"ADDSUB:                  %0d\n", addsub_counter);
-    //             $fwrite(fd,"SHIFT:                   %0d\n", shift_counter);
-    //             $fwrite(fd,"BRANCH:                  %0d\n", branch_counter);
-    //             $fwrite(fd,"JUMP:                    %0d\n", jump_counter);
-    //             $fwrite(fd,"LOAD:                    %0d\n", load_counter);
-    //             $fwrite(fd,"STORE:                   %0d\n", store_counter);
-    //             $fwrite(fd,"SYS:                     %0d\n", sys_counter);
-    //             $fwrite(fd,"CSR:                     %0d\n", csr_counter);
-    //             $fwrite(fd,"MUL:                     %0d\n", mul_counter);
-    //             $fwrite(fd,"DIV:                     %0d\n", div_counter);
+                $fwrite(fd,"\nINSTRUCTION COUNTERS:\n");
+                $fwrite(fd,"LUI_SLT:                 %0d\n", lui_slt_counter);
+                $fwrite(fd,"LOGIC:                   %0d\n", logic_counter);
+                $fwrite(fd,"ADDSUB:                  %0d\n", addsub_counter);
+                $fwrite(fd,"SHIFT:                   %0d\n", shift_counter);
+                $fwrite(fd,"BRANCH:                  %0d\n", branch_counter);
+                $fwrite(fd,"JUMP:                    %0d\n", jump_counter);
+                $fwrite(fd,"LOAD:                    %0d\n", load_counter);
+                $fwrite(fd,"STORE:                   %0d\n", store_counter);
+                $fwrite(fd,"SYS:                     %0d\n", sys_counter);
+                $fwrite(fd,"CSR:                     %0d\n", csr_counter);
+                $fwrite(fd,"MUL:                     %0d\n", mul_counter);
+                $fwrite(fd,"DIV:                     %0d\n", div_counter);
             
-    //         if(VEnable) begin
-    //                 $fwrite(fd, "\nVECTOR EXTENSION:\n");
-    //                 $fwrite(fd, "VADDSUB:                 %0d\n", vaddsub_counter);
-    //                 $fwrite(fd, "VMUL:                    %0d\n", vmul_counter);
-    //                 $fwrite(fd, "VDIV:                    %0d\n", vdiv_counter);
-    //                 $fwrite(fd, "VMAC:                    %0d\n", vmac_counter);
-    //                 $fwrite(fd, "VRED:                    %0d\n", vred_counter);
-    //                 $fwrite(fd, "VLOAD/VSTORE:            %0d\n", vloadstore_counter);
-    //                 $fwrite(fd, "VOTHERS:                 %0d\n", vothers_counter);
-    //             end
-    //         end
-    //     end
-    // `endif
+            if(VEnable) begin
+                    $fwrite(fd, "\nVECTOR EXTENSION:\n");
+                    $fwrite(fd, "VADDSUB:                 %0d\n", vaddsub_counter);
+                    $fwrite(fd, "VMUL:                    %0d\n", vmul_counter);
+                    $fwrite(fd, "VDIV:                    %0d\n", vdiv_counter);
+                    $fwrite(fd, "VMAC:                    %0d\n", vmac_counter);
+                    $fwrite(fd, "VRED:                    %0d\n", vred_counter);
+                    $fwrite(fd, "VLOAD/VSTORE:            %0d\n", vloadstore_counter);
+                    $fwrite(fd, "VOTHERS:                 %0d\n", vothers_counter);
+                end
+            end
+        end
+    `endif
     end
     else begin : gen_zihpm_csr_off
         assign instructions_killed_counter = '0;
