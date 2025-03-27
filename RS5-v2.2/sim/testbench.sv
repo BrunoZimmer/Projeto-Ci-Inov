@@ -104,6 +104,8 @@
      logic [31:0]            irq;
 
      logic                   accel_en;
+     logic [31:0]            accel_mem_address;
+     logic [31:0]            accel_mem_data;
  
      assign irq = {20'h0, mei, 3'h0, mti, 7'h0};
  
@@ -519,6 +521,8 @@
             .mem_data_o             (mem_data_write),
             .interrupt_ack_o        (interrupt_ack),
             .accel_en               (accel_en),
+            .accel_mem_address      (accel_mem_address),
+            .accel_mem_data         (accel_mem_data),
 
 
             .rst                    (rst),

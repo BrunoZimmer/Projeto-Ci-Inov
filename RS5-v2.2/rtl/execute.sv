@@ -74,7 +74,6 @@ module execute
     output  logic               write_enable_fwd_o,
     output  iType_e             instruction_operation_o,
     output  logic   [31:0]      result_o,
-    output  logic               accel_en,
     output  logic   [31:0]      result_fwd_o,
     output  logic   [ 4:0]      rd_o,
 
@@ -123,7 +122,12 @@ module execute
     output  logic               machine_return_o,
     output  logic               raise_exception_o,
     output  logic [31:0]        jump_target_o,
-    output  exceptionCode_e     exception_code_o
+    output  exceptionCode_e     exception_code_o,
+
+    
+    output  logic               accel_en,
+    output  logic   [31:0]      accel_mem_address,
+    output  logic   [31:0]      accel_mem_data
 );
 
     logic [31:0]    result;
@@ -138,19 +142,19 @@ module execute
 
 
 // Enable para salvar na ram externa
-    // always_comb begin
-    //     unique case (instruction_operation_i)
-    //         // To link register. Maybe we can remove this by using the PC in decode stage
-    //         SUB: begin
-    //             accel_mem_addres = rs1_data_i;
-    //             accel_mem_data = rs2_data_i;
-    //         end
-    //         default:  begin 
-    //             accel_mem_addres = '0
-    //             accel_mem_data = '0;
-    //         end
-    //     endcase
-    // end
+    always_comb begin
+        unique case (instruction_operation_i)
+            // To link register. Maybe we can remove this by using the PC in decode stage
+            SUB: begin
+                accel_mem_address = rs1_data_i;
+                accel_mem_data = rs2_data_i;
+            end
+            default:  begin 
+                accel_mem_address = '0
+                accel_mem_data = '0;
+            end
+        endcase
+    end
 
 // Enable para dar o output e dizer que tem um dado para acelerador
 always_comb begin

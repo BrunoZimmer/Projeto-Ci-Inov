@@ -57,7 +57,8 @@
     output logic [31:0]             mem_data_o,
     output logic                    interrupt_ack_o,
     output logic                    accel_en,
-
+    output logic [31:0]             accel_mem_address,
+    output logic [31:0]             accel_mem_data,
 
 
     input   logic                   rst,
@@ -459,7 +460,10 @@
          .machine_return_o        (MACHINE_RETURN),
          .raise_exception_o       (RAISE_EXCEPTION),
          .exception_code_o        (Exception_Code),
-         .accel_en                (accel_en)
+
+         .accel_en                (accel_en),
+         .accel_mem_address       (accel_mem_address),
+         .accel_mem_data          (accel_mem_data)
      );
  
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
