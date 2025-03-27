@@ -18,7 +18,8 @@ RS5/proto/**/*.runs/**
 RS5/proto/**/*.cache/**
 RS5/proto/**/*.gen/**
 RS5/proto/**/*.ip_user_files/**
-RS5/synthesis/**
+RS5/synthesis/genus*/**
+RS5/synthesis/innovus*/*
 
 butterfly_edited_old/
 Butterfly_test_old/

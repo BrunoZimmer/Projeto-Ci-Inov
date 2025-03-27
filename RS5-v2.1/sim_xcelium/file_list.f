@@ -27,7 +27,7 @@ $(CURRENT_PATH)/../rtl/fft_acc/mux_n.sv
 $(CURRENT_PATH)/../rtl/fft_acc/pipling_stage_n.sv 
 $(CURRENT_PATH)/../rtl/fft_acc/s_ram.sv 
 $(CURRENT_PATH)/../rtl/fft_acc/twiddle_rom_imag_n.sv 
-$(CURRENT_PATH)/../rtl/fft_acc/twiddle_rom_real_n.v
+$(CURRENT_PATH)/../rtl/fft_acc/twiddle_rom_real_n.sv
 $(CURRENT_PATH)/../rtl/fft_acc/top_n.sv 
 
 $(CURRENT_PATH)/../rtl/aes_unit.sv 

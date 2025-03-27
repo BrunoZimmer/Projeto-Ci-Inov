@@ -9,7 +9,8 @@ proto/**/*.runs/**
 proto/**/*.cache/**
 proto/**/*.gen/**
 proto/**/*.ip_user_files/**
-synthesis/**
+synthesis/genus*
+synthesis/innovus*
 *.d
 *.o
 Vtb_wrapper*
