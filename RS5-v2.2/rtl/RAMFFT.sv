@@ -14,9 +14,10 @@ module RAMFFT
 (
     input                                   clk,
     input                                   rst,
+    input                                   accel_mem_en,
     input                                   en_i,
     input                                   we_i,
-    input  [($clog2(MEMWIDTH) - 1):0]       addr_i,
+    input  [($clog2(64) - 1):0]             addr_i,
     input  [31:0]                           data_i,
     output reg [WORDWIDTH-1:0]              data_o_0_r,
     output reg [WORDWIDTH-1:0]              data_o_1_r,
@@ -66,7 +67,7 @@ module RAMFFT
                     .rst(rst),
                     .D(dff_in[word][bit_n]),
                     .Q(dff_out[word][bit_n]),
-                    .en(en_i && we_i) 
+                    .en((en_i && we_i) | accel_mem_en) 
                 );
             end
         end
@@ -90,81 +91,38 @@ module RAMFFT
         end
     end
 
-    /* Read */
-    always_ff @(posedge clk or negedge rst) begin
-        // if (!rst) begin
-        //     // Reset all outputs
-        //     data_o_0_r <= '0;
-        //     data_o_1_r <= '0;
-        //     data_o_2_r <= '0;
-        //     data_o_3_r <= '0;
-        //     data_o_4_r <= '0;
-        //     data_o_5_r <= '0;
-        //     data_o_6_r <= '0;
-        //     data_o_7_r <= '0;
-        //     data_o_8_r <= '0;
-        //     data_o_9_r <= '0;
-        //     data_o_10_r <= '0;
-        //     data_o_11_r <= '0;
-        //     data_o_12_r <= '0;
-        //     data_o_13_r <= '0;
-        //     data_o_14_r <= '0;
-        //     data_o_15_r <= '0;
-        //     data_o_16_r <= '0;
-        //     data_o_17_r <= '0;
-        //     data_o_18_r <= '0;
-        //     data_o_19_r <= '0;
-        //     data_o_20_r <= '0;
-        //     data_o_21_r <= '0;
-        //     data_o_22_r <= '0;
-        //     data_o_23_r <= '0;
-        //     data_o_24_r <= '0;
-        //     data_o_25_r <= '0;
-        //     data_o_26_r <= '0;
-        //     data_o_27_r <= '0;
-        //     data_o_28_r <= '0;
-        //     data_o_29_r <= '0;
-        //     data_o_30_r <= '0;
-        //     data_o_31_r <= '0;
-        // end 
-        if (en_i == 1'b1) begin
-            if (we_i == '0) begin
-                data_o_0_r          <= dff_out[0];
-                data_o_1_r          <= dff_out[1];
-                data_o_2_r          <= dff_out[2];
-                data_o_3_r          <= dff_out[3];
-                data_o_4_r          <= dff_out[4];
-                data_o_5_r          <= dff_out[5];
-                data_o_6_r          <= dff_out[6];
-                data_o_7_r          <= dff_out[7];
-                data_o_8_r          <= dff_out[8];
-                data_o_9_r          <= dff_out[9];
-                data_o_10_r         <= dff_out[10];
-                data_o_11_r         <= dff_out[11];
-                data_o_12_r         <= dff_out[12];
-                data_o_13_r         <= dff_out[13];
-                data_o_14_r         <= dff_out[14];
-                data_o_15_r         <= dff_out[15];
-                data_o_16_r         <= dff_out[16];
-                data_o_17_r         <= dff_out[17];
-                data_o_18_r         <= dff_out[18];
-                data_o_19_r         <= dff_out[19];
-                data_o_20_r         <= dff_out[20];
-                data_o_21_r         <= dff_out[21];
-                data_o_22_r         <= dff_out[22];
-                data_o_23_r         <= dff_out[23];
-                data_o_24_r         <= dff_out[24];
-                data_o_25_r         <= dff_out[25];
-                data_o_26_r         <= dff_out[26];
-                data_o_27_r         <= dff_out[27];
-                data_o_28_r         <= dff_out[28];
-                data_o_29_r         <= dff_out[29];
-                data_o_30_r         <= dff_out[30];
-                data_o_31_r         <= dff_out[31];
-            end
-        end
-    end
-
+    assign data_o_0_r     = dff_out[0];
+    assign data_o_1_r     = dff_out[1];
+    assign data_o_2_r     = dff_out[2];
+    assign data_o_3_r     = dff_out[3];
+    assign data_o_4_r     = dff_out[4];
+    assign data_o_5_r     = dff_out[5];
+    assign data_o_6_r     = dff_out[6];
+    assign data_o_7_r     = dff_out[7];
+    assign data_o_8_r     = dff_out[8];
+    assign data_o_9_r     = dff_out[9];
+    assign data_o_10_r    = dff_out[10];
+    assign data_o_11_r    = dff_out[11];
+    assign data_o_12_r    = dff_out[12];
+    assign data_o_13_r    = dff_out[13];
+    assign data_o_14_r    = dff_out[14];
+    assign data_o_15_r    = dff_out[15];
+    assign data_o_16_r    = dff_out[16];
+    assign data_o_17_r    = dff_out[17];
+    assign data_o_18_r    = dff_out[18];
+    assign data_o_19_r    = dff_out[19];
+    assign data_o_20_r    = dff_out[20];
+    assign data_o_21_r    = dff_out[21];
+    assign data_o_22_r    = dff_out[22];
+    assign data_o_23_r    = dff_out[23];
+    assign data_o_24_r    = dff_out[24];
+    assign data_o_25_r    = dff_out[25];
+    assign data_o_26_r    = dff_out[26];
+    assign data_o_27_r    = dff_out[27];
+    assign data_o_28_r    = dff_out[28];
+    assign data_o_29_r    = dff_out[29];
+    assign data_o_30_r    = dff_out[30];
+    assign data_o_31_r    = dff_out[31];
     
 endmodule
 

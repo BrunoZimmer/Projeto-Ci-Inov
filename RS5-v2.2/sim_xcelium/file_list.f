@@ -55,8 +55,6 @@ $(CURRENT_PATH)/../rtl/vectorRegbank.sv
 $(CURRENT_PATH)/../rtl/vectorUnit.sv 
 
 
-
-
 $(CURRENT_PATH)/../rtl/RAM_mem.sv
 $(CURRENT_PATH)/../rtl/FlipFlopD.sv
 $(CURRENT_PATH)/../rtl/RAMFFT.sv

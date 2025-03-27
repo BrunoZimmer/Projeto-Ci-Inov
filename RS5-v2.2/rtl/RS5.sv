@@ -56,9 +56,12 @@
     output logic [31:0]             mem_address_o,
     output logic [31:0]             mem_data_o,
     output logic                    interrupt_ack_o,
+
     output logic                    accel_en,
+    output logic                    accel_mem_en,
     output logic [31:0]             accel_mem_address,
     output logic [31:0]             accel_mem_data,
+    
 
 
     input   logic                   rst,
@@ -461,9 +464,10 @@
          .raise_exception_o       (RAISE_EXCEPTION),
          .exception_code_o        (Exception_Code),
 
-         .accel_en                (accel_en),
          .accel_mem_address       (accel_mem_address),
-         .accel_mem_data          (accel_mem_data)
+         .accel_mem_data          (accel_mem_data),
+         .accel_mem_en            (accel_mem_en),
+         .accel_en                (accel_en)
      );
  
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -604,12 +608,10 @@
      logic		[OUT_width-1:0]		ram_o_30_r;
      logic		[OUT_width-1:0]		ram_o_31_r;
  
-     RAMFFT #(
-         .MEMWIDTH(128),
-         .WORDWIDTH(16)
-     ) RAMFFT (
+     RAMFFT  RAMFFT (
          .clk         (clk),
          .rst         (reset_n),
+         .accel_mem_en(accel_mem_en),
          .en_i        (en_i),
          .we_i        (we_i),
          .addr_i      (addr_i),

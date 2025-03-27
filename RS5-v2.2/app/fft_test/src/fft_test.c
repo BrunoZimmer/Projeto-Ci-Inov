@@ -18,6 +18,74 @@ int main() {
         "add t2, t2, s2\n\t"
         "add t3, t3, s3\n\t"
         "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        :
+        :
+        : "t0", "t1", "t2", "t3", "t4", "s0", "s1", "s2", "s3", "s4" // Clobbered registers
+    );
+
+
+    __asm__ __volatile__ (
+        "li t0, 1\n\t"       // Carrega a (1) no registrador t0
+        "li t1, 1999\n\t"    // Carrega b (1884) no registrador s0
+        "sub s0, t0, t1\n\t" 
+        "sub s0, t0, t1\n\t" 
+        :
+        :
+        : "s0", "t0", "t1"   // Registradores modificados
+    );
+
+    __asm__ __volatile__ (
+        "li t0, 3\n\t"       // Carrega a (1) no registrador t0
+        "li t1, 2025\n\t"    // Carrega b (1884) no registrador s0
+        "sub s0, t0, t1\n\t" 
+        "sub s0, t0, t1\n\t" 
+        :
+        :
+        : "s0", "t0", "t1"   // Registradores modificados
+    );
+
+
+    __asm__ __volatile__ (
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
+        "add t0, t0, s0\n\t"
+        "add t1, t1, s1\n\t"
+        "add t2, t2, s2\n\t"
+        "add t3, t3, s3\n\t"
+        "add t4, t4, s4\n\t"
         :
         :
         : "t0", "t1", "t2", "t3", "t4", "s0", "s1", "s2", "s3", "s4" // Clobbered registers

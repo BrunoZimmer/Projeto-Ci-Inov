@@ -106,6 +106,8 @@
      logic                   accel_en;
      logic [31:0]            accel_mem_address;
      logic [31:0]            accel_mem_data;
+     logic                   accel_mem_en;
+     
  
      assign irq = {20'h0, mei, 3'h0, mti, 7'h0};
  

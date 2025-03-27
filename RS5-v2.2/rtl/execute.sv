@@ -125,9 +125,10 @@ module execute
     output  exceptionCode_e     exception_code_o,
 
     
-    output  logic               accel_en,
     output  logic   [31:0]      accel_mem_address,
-    output  logic   [31:0]      accel_mem_data
+    output  logic   [31:0]      accel_mem_data,
+    output  logic   [31:0]      accel_mem_en,
+    output  logic               accel_en
 );
 
     logic [31:0]    result;
@@ -147,11 +148,13 @@ module execute
             // To link register. Maybe we can remove this by using the PC in decode stage
             SUB: begin
                 accel_mem_address = rs1_data_i;
-                accel_mem_data = rs2_data_i;
+                accel_mem_data = second_operand_i;
+                accel_mem_en = '1;
             end
             default:  begin 
-                accel_mem_address = '0
+                accel_mem_address = '0;
                 accel_mem_data = '0;
+                accel_mem_en = '0;
             end
         endcase
     end

@@ -96,7 +96,8 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 	set_db optimize_constant_feedback_seqs false
 
 	set_db optimize_constant_0_flops false
-
+	#nome depois do elaborate
+    #get_db [ set_db inst:REG ] .preserve true 
 }
 
 
@@ -115,12 +116,12 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 puts "Load hdl files"
 puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
-	read_hdl -define SYNTH -sv "../../rtl/RS5_pkg.sv			\
+	read_hdl -define SYNTH -sv "../../rtl/RS5_pkg.sv						\
 								../../rtl/aes/riscv_crypto_sbox_aes_out.sv 	\
 								../../rtl/aes/riscv_crypto_sbox_aes_top.sv 	\
 								../../rtl/aes/riscv_crypto_sbox_inv_mid.sv 	\
 								../../rtl/aes/riscv_crypto_aes_fwd_sbox.sv 	\
-								../../rtl/aes/.sv 	\
+								../../rtl/aes/riscv_crypto_aes_sbox.sv		\					\
 								../../rtl/aes_unit.sv 						\
 								../../rtl/amo.sv 							\
 								../../rtl/CSRBank.sv 						\
@@ -140,24 +141,25 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 								../../rtl/vectorLSU.sv						\
 								../../rtl/vectorRegbank.sv  				\
 								../../rtl/vectorUnit.sv						\
-								../../rtl/RS5.sv							\
+								../../rtl/FlipFlopD.sv						\
+								../../rtl/RAMFFT.sv							\
 								../../rtl/RS5.sv							\
 								../../rtl/fft_acc/adder3_n.sv				\
-								../../rtl/fft_acc/butterfly2_n.sv		 \
-								../../rtl/fft_acc/butterfly4_n.sv		 \ 
-								../../rtl/fft_acc/butterfly8_n.sv		\ 
-								../../rtl/fft_acc/butterfly16_n.sv		\ 
-								../../rtl/fft_acc/butterfly32_n.sv		\ 
-								../../rtl/fft_acc/clk_div.sv		\ 
-								../../rtl/fft_acc/control_unit.sv		\ 
-								../../rtl/fft_acc/fft_wrapper.sv		\ 
-								../../rtl/fft_acc/get_negative_n.sv		\ 
-								../../rtl/fft_acc/m_ram.sv		\ 
-								../../rtl/fft_acc/multiplier_n.sv		\ 
-								../../rtl/fft_acc/mux_n.sv		\ 
+								../../rtl/fft_acc/butterfly2_n.sv		 	\
+								../../rtl/fft_acc/butterfly4_n.sv		 	\ 
+								../../rtl/fft_acc/butterfly8_n.sv			\ 
+								../../rtl/fft_acc/butterfly16_n.sv			\ 
+								../../rtl/fft_acc/butterfly32_n.sv			\ 
+								../../rtl/fft_acc/clk_div.sv				\ 
+								../../rtl/fft_acc/control_unit.sv			\ 
+								../../rtl/fft_acc/fft_wrapper.sv			\ 
+								../../rtl/fft_acc/get_negative_n.sv			\ 
+								../../rtl/fft_acc/m_ram.sv					\ 
+								../../rtl/fft_acc/multiplier_n.sv			\ 
+								../../rtl/fft_acc/mux_n.sv					\ 
 								../../rtl/fft_acc/pipling_stage_n.sv		\ 
-								../../rtl/fft_acc/s_ram.sv		\ 
-								../../rtl/fft_acc/top_n.sv		\ 
+								../../rtl/fft_acc/s_ram.sv					\	 
+								../../rtl/fft_acc/top_n.sv					\	 
 								../../rtl/fft_acc/twiddle_rom_imag_n.sv		\ 
 								../../rtl/fft_acc/twiddle_rom_real_n.sv		"
 }
