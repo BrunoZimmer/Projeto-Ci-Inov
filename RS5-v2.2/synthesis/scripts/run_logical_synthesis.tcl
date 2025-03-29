@@ -35,7 +35,7 @@ set OUT_FILES ${LOCAL_PATH}/results
 ###############################################################################
 set load_pdk                  1
 set tool_config               1
-set clock_gating              0
+set clock_gating              1
 set load_hdl                  1
 set elaborate                 1
 set synthesis                 1
@@ -74,9 +74,9 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 	### Tool effort, default is mediun
 	set_db syn_global_effort high
-	#set_db syn_generic_effort high
-	#set_db syn_map_effort high
-	#set_db syn_opt_effort high
+	set_db syn_generic_effort high
+	set_db syn_map_effort high
+	set_db syn_opt_effort high
 
 	### keep hierarchy
 	set_db auto_ungroup none
@@ -93,9 +93,9 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 	# foreach latchInst [all des seqs -level_sensitive] { puts "[vname $latchInst]" }
 
 	#Prevent replacing synchronous part of an always feeding back flip flop
-	set_db optimize_constant_feedback_seqs false
+	# set_db optimize_constant_feedback_seqs false
 
-	set_db optimize_constant_0_flops false
+	# set_db optimize_constant_0_flops false
 	#nome depois do elaborate
     #get_db [ set_db inst:REG ] .preserve true 
 }

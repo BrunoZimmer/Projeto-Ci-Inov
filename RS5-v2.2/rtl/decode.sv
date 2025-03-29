@@ -178,8 +178,9 @@ module decode
             10'b0000001111:     decode_op = (MULEXT == MUL_M  ) ? REMU   : INVALID;
             // 10'b??10001000:     decode_op = ZKNEEnable ? AES32ESI  : INVALID;
             // 10'b??10011000:     decode_op = ZKNEEnable ? AES32ESMI : INVALID;
-            10'b??10001000:     decode_op = ZKNEEnable ? FFT_ACC  : INVALID;
-            10'b???1100001:     decode_op = FFT_ACC;
+            // 10'b??10001000:     decode_op = ZKNEEnable ? FFT_ACC  : INVALID;
+            10'b0100000110:     decode_op = FFT_MEM; //variação do OR
+            10'b0100000111:     decode_op = FFT_RUN; //variação do AND
             default:            decode_op = INVALID;
         endcase
     end

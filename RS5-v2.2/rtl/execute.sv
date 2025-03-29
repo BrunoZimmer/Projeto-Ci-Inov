@@ -146,7 +146,12 @@ module execute
     always_comb begin
         unique case (instruction_operation_i)
             // To link register. Maybe we can remove this by using the PC in decode stage
-            SUB: begin
+            // SUB: begin
+            //     accel_mem_address = rs1_data_i;
+            //     accel_mem_data = second_operand_i;
+            //     accel_mem_en = '1;
+            // end
+            FFT_MEM: begin
                 accel_mem_address = rs1_data_i;
                 accel_mem_data = second_operand_i;
                 accel_mem_en = '1;
@@ -163,7 +168,10 @@ module execute
 always_comb begin
     unique case (instruction_operation_i)
         // To link register. Maybe we can remove this by using the PC in decode stage
-        ADD: begin
+        // ADD: begin
+        //     accel_en = 1'b1;
+        // end
+        FFT_RUN: begin
             accel_en = 1'b1;
         end
         default:  begin 
@@ -685,6 +693,8 @@ end
             SLL:                    result = sll_result;
             SRL:                    result = srl_result;
             SRA:                    result = sra_result;
+            FFT_MEM:                result = and_result;
+            FFT_RUN:                result = and_result;
             LUI:                    result = second_operand_i;
             AUIPC:                  result = jump_imm_target_i;
             DIV,DIVU:               result = div_result;

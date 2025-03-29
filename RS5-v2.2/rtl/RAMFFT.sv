@@ -67,7 +67,7 @@ module RAMFFT
                     .rst(rst),
                     .D(dff_in[word][bit_n]),
                     .Q(dff_out[word][bit_n]),
-                    .en((en_i && we_i) | accel_mem_en) 
+                    .en((en_i && we_i) || accel_mem_en)
                 );
             end
         end
@@ -87,6 +87,11 @@ module RAMFFT
                 for (int bit_w = 0; bit_w < WORDWIDTH; bit_w++) begin
                     dff_in[addr_i][bit_w] <= data_i[bit_w];  // Write bit-by-bit
                 end
+            end
+        end
+        if (accel_mem_en == 1'b1) begin                                 
+            for (int bit_w = 0; bit_w < WORDWIDTH; bit_w++) begin
+                dff_in[addr_i][bit_w] <= data_i[bit_w];  // Write bit-by-bit
             end
         end
     end

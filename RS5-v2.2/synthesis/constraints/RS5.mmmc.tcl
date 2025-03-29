@@ -27,6 +27,5 @@ create_analysis_view -name AV2 -constraint_mode Functional -delay_corner Corner2
 create_analysis_view -name AV3 -constraint_mode Redu_clock -delay_corner Corner1
 create_analysis_view -name AV4 -constraint_mode Redu_clock -delay_corner Corner2
 
-# set_analysis_view -setup AV1 AV2 AV3 AV4 -hold AV1 AV2 AV3 AV4
 set_analysis_view -setup AV4 AV2 -hold AV1 AV3 
 

@@ -50,7 +50,7 @@
  `endif
  
      localparam int           MEM_WIDTH       = 65_536;
-     localparam string        BIN_FILE        = "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v2.2/app/fft_test/fft_test.bin";
+     localparam string        BIN_FILE        = "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v2.2/app/fft-test/fft-test.bin";
      
      localparam int           i_cnt = 1;
  
