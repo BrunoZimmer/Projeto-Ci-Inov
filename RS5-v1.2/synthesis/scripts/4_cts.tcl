@@ -1,7 +1,7 @@
 
 add_ndr \
   -name CTS_2W1S \
-  -width_multiplier {Metal1:Metal5 1.0}
+  -width_multiplier {Metal1:Metal5 2.0}
 
 create_route_type \
   -name top_rule \

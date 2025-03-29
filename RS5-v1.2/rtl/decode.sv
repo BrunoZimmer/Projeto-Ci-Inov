@@ -148,6 +148,7 @@ module decode
             10'b???????011:     decode_op_imm = SLTU;   /* SLTIU */
             10'b???????100:     decode_op_imm = XOR;    /* XORI */
             10'b0000000101:     decode_op_imm = SRL;    /* SRLI */
+            10'b0100000101:     decode_op_imm = FFT_RUN; //variação do SRLI
             10'b0100000101:     decode_op_imm = SRA;    /* SRAI */
             10'b???????110:     decode_op_imm = OR;     /* ORI */
             10'b???????111:     decode_op_imm = AND;    /* ANDI */
@@ -178,8 +179,11 @@ module decode
             10'b0000001111:     decode_op = (MULEXT == MUL_M  ) ? REMU   : INVALID;
             // 10'b??10001000:     decode_op = ZKNEEnable ? AES32ESI  : INVALID;
             // 10'b??10011000:     decode_op = ZKNEEnable ? AES32ESMI : INVALID;
-            10'b??10001000:     decode_op = ZKNEEnable ? FFT_ACC  : INVALID;
-            10'b???1100001:     decode_op = FFT_ACC;
+            // 10'b??10001000:     decode_op = ZKNEEnable ? FFT_ACC  : INVALID;
+            10'b0100000110:     decode_op = FFT_MEM; //variação do OR
+            10'b0100000001:     decode_op = FFT_RUN; //variação do AND
+            // 10'b0100000111:     decode_op = FFT_RUN; //variação do AND
+            // 10'b???1100001:     decode_op = FFT_ACC;
             default:            decode_op = INVALID;
         endcase
     end

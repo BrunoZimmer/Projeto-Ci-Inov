@@ -34,6 +34,7 @@ $(CURRENT_PATH)/../rtl/vectorLSU.sv
 $(CURRENT_PATH)/../rtl/vectorRegbank.sv 
 $(CURRENT_PATH)/../rtl/vectorUnit.sv
 
+$(CURRENT_PATH)/../rtl/fft_acc/radix2.sv
 $(CURRENT_PATH)/../rtl/fft_acc/ROM_2.sv
 $(CURRENT_PATH)/../rtl/fft_acc/ROM_4.sv
 $(CURRENT_PATH)/../rtl/fft_acc/ROM_8.sv
@@ -43,10 +44,10 @@ $(CURRENT_PATH)/../rtl/fft_acc/shift_2.sv
 $(CURRENT_PATH)/../rtl/fft_acc/shift_4.sv
 $(CURRENT_PATH)/../rtl/fft_acc/shift_8.sv
 $(CURRENT_PATH)/../rtl/fft_acc/shift_16.sv
-$(CURRENT_PATH)/../rtl/fft_acc/radix2.sv
 $(CURRENT_PATH)/../rtl/FFT.sv
 
 
 $(CURRENT_PATH)/../rtl/RAM_mem.sv
+$(CURRENT_PATH)/../rtl/FlipFlopD.sv
 $(CURRENT_PATH)/../rtl/RAMFFT.sv
 $(CURRENT_PATH)/../sim/testbench.sv

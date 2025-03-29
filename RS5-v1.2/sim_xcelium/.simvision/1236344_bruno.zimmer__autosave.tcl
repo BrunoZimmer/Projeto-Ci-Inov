@@ -48,6 +48,10 @@ alias . run
 alias indago verisium
 alias quit exit
 database -open -shm -into waves.shm waves -default -event
-probe -create -database waves testbench.dut.instruction_operation_execute testbench.dut.accel_mem_en testbench.dut.accel_mem_data testbench.dut.accel_mem_address testbench.dut.accel_en testbench.dut.fft.out0_i testbench.dut.fft.out0_r testbench.dut.fft.out1_i testbench.dut.fft.out1_r testbench.dut.fft.out2_i testbench.dut.fft.out2_r testbench.dut.fft.out3_i testbench.dut.fft.out3_r testbench.dut.fft.out4_i testbench.dut.fft.out4_r testbench.dut.fft.out5_i testbench.dut.fft.out5_r testbench.dut.fft.in0_r testbench.dut.fft.in1_r testbench.dut.fft.in2_r testbench.dut.fft.in3_r testbench.dut.fft.in4_r testbench.dut.fft.in5_r
+probe -create -database waves testbench.dut.instruction_operation_execute
+probe -create -database waves testbench.dut.accel_out_en testbench.dut.accel_mem_en testbench.dut.accel_mem_data testbench.dut.accel_mem_address testbench.dut.accel_en testbench.dut.accel_dout_r testbench.dut.accel_dout_i
+probe -create -database waves testbench.dut.FFT_CORE.din_i testbench.dut.FFT_CORE.din_r testbench.dut.RAMFFT.data_o_b testbench.dut.RAMFFT.data_o_a
+probe -create -database waves testbench.dut.RAMFFT.addr_i
+probe -create -database waves testbench.dut.FFT_CORE.assign_out
 
-simvision -input /home/ic/bruno.zimmer/Documents/Projeto/RS5-v2.2/sim_xcelium/.simvision/1161137_bruno.zimmer__autosave.tcl.svcf
+simvision -input /home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/sim_xcelium/.simvision/1236344_bruno.zimmer__autosave.tcl.svcf

@@ -15,10 +15,13 @@ module RAMFFT
     input                                   clk,
     input                                   rst,
     input                                   accel_mem_en,
+
     input                                   en_i,
     input                                   we_i,
-    input  [($clog2(64) - 1):0]             addr_i,
-    input  [31:0]                           data_i,
+
+    input  [($clog2(MEMWIDTH) - 1):0]       addr_i,
+    input  [WORDWIDTH-1:0]                  data_i,
+
     output reg [WORDWIDTH-1:0]              data_o_0_r,
     output reg [WORDWIDTH-1:0]              data_o_1_r,
     output reg [WORDWIDTH-1:0]              data_o_2_r,

@@ -58,19 +58,22 @@
     output logic [31:0]             mem_address_o,
     output logic [31:0]             mem_data_o,
     output logic                    interrupt_ack_o,
-    output logic                    accel_en,
-
+    
     input logic                     rst,
+    
+    input logic                     en_i,
+    input logic                     we_i,
+    input logic   [15:0]            addr_i,
+    input logic   [31:0]            data_i,
     
     output logic                    accel_out_en, 
     output logic  [15:0]            accel_dout_r,   
     output logic  [15:0]            accel_dout_i,  
-
-
-    input logic                     en_i,
-    input logic                     we_i,
-    input logic   [15:0]            addr_i,
-    input logic   [31:0]            data_i
+    
+    output logic                    accel_mem_en,
+    output logic [31:0]             accel_mem_address,
+    output logic [31:0]             accel_mem_data,
+    output logic                    accel_en
  );
  
  //////////////////////////////////////////////////////////////////////////////
@@ -402,6 +405,10 @@
          .machine_return_o        (MACHINE_RETURN),
          .raise_exception_o       (RAISE_EXCEPTION),
          .exception_code_o        (Exception_Code),
+
+         .accel_mem_address       (accel_mem_address),
+         .accel_mem_data          (accel_mem_data),
+         .accel_mem_en            (accel_mem_en),
          .accel_en                (accel_en)
      );
  
@@ -516,23 +523,27 @@
      logic [31:0]   fft_ram_out_r;
      
      RAMFFT #(
-        .MEM_WIDTH(128),
-        .WORD_WIDTH(16)
+        .MEMWIDTH(128),
+        .WORDWIDTH(16)
     ) RAMFFT (
-        .clk         (clk),
-        .rst         (rst),
-        .en_i        (en_i),
-        .we_i        (we_i),
-        .addr_i      (addr_i),
-        .data_i      (data_i),
-        .data_o_a    (fft_ram_out_i),
-        .data_o_b    (fft_ram_out_r)
+        .clk            (clk),
+        .rst            (reset_n),
+        .accel_mem_en   (accel_mem_en),
+        .accel_en       (accel_en),
+        .en_i           (en_i),
+        .we_i           (we_i),
+        
+        .addr_i         (accel_mem_address),
+        .data_i         (accel_mem_data),
+
+        .data_o_a       (fft_ram_out_r),
+        .data_o_b       (fft_ram_out_i)
     );
     
 // FFT DECLARATION
      FFT FFT_CORE(
         .clk                    (clk),
-        .reset                  (rst),                      // RESET INVERTIDO
+        .reset                  (!reset_n),                      // RESET INVERTIDO
         .in_valid               (accel_en),                 // 1  bits
         .din_r                  (fft_ram_out_i[11:0]),              // 12 bits  
         .din_i                  (fft_ram_out_r[11:0]),              // 12 bits

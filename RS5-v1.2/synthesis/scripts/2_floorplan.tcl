@@ -46,33 +46,6 @@ addRing \
   -width 0.3 \
   -spacing 0.6
 
-addStripe \
- -nets {VDD VSS} \
- -layer Metal11 \
- -width 0.12 \
- -spacing 0.4 \
- -number_of_sets 4 \
- -start 10 \
- -stop 60
-
-
-# addStripe \
-#  -nets {VDD VSS} \
-#  -layer Metal10 \
-#  -width 1.8 \
-#  -spacing 1.8 \
-#  -number_of_sets 4 \
-#  -start 10 \
-#  -stop 60
-
-setDesignMode -topRoutingLayer 11
-setDesignMode -bottomRoutingLayer 2
-
-
-# check_design -all
-# gui_fit
-
-# write_db Save2
 #  -type {core_rings block_rings} \
 #  -around {default_power_domain user_defined} \
 
@@ -80,6 +53,14 @@ sroute
 
 #addWellTap -cell FILL1 -cellInterval 6
 
+#addStripe \
+#  -nets {VDD VSS} \
+#  -layer Metal4 \
+#  -width 0.12 \
+#  -spacing 0.4 \
+#  -number_of_sets 4 \
+#  -start 10 \
+#  -stop 60
 
 setDesignMode -topRoutingLayer 10
 setDesignMode -bottomRoutingLayer 2

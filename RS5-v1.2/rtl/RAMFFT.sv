@@ -3,63 +3,94 @@
 // RAM MEMORY
 //////////////////////////////////////////////////////////////////////////////
 
-`include "../rtl/RS5_pkg.sv"
 
-module RAM_mem_16b
-    import RS5_pkg::*;
+//////////////////////////////////////////////////////////////////////////////
+// reg_bank MEMORY
+//////////////////////////////////////////////////////////////////////////////
+
+ `include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v2.2/rtl/RS5_pkg.sv"
+// `include "../rtl/RS5_pkg.sv"
+
+module RAMFFT
 #(
-    parameter int    MEM_WIDTH  = 65536,
-    parameter int    WORD_WIDTH  = 16
+    parameter int    MEMWIDTH  = 64,
+    parameter int    WORDWIDTH  = 16
 )
 (
-    input  logic                             clk,
-    input  logic                             rst,
-    input  logic                             en_i,
-    input  logic                             we_i,
-    input  logic [15:0]                      addr_i,
-    input  logic [31:0]                      data_i,
-    output logic [31:0]                      data_o_a,
-    output logic [31:0]                      data_o_b
+    input                                   clk,
+    input                                   rst,
+    input                                   accel_mem_en,
+    input                                   accel_en,
+
+    input                                   en_i,
+    input                                   we_i,
+
+    input  [($clog2(MEMWIDTH) - 1):0]       addr_i,
+    input  logic [WORDWIDTH-1:0]            data_i,
+    output logic [WORDWIDTH-1:0]            data_o_a,
+    output logic [WORDWIDTH-1:0]            data_o_b
+    
 );
 
-    reg [WORD_WIDTH-1:0] RAM [0:MEM_WIDTH-1];
+
+    reg [WORDWIDTH-1:0] dff_in [0:MEMWIDTH-1];
+    reg [WORDWIDTH-1:0] dff_out [0:MEMWIDTH-1];
+ // Generate words with 16-bit D Flip-Flops
+    genvar word, bit_n;
+    generate
+        for (word= 0; word< MEMWIDTH; word++) begin : word_gen
+            for (bit_n = 0; bit_n < WORDWIDTH; bit_n++) begin : bit_gen
+                FlipFlopD dffInst (
+                    .clk(clk),
+                    .rst(rst),
+                    .D(dff_in[word][bit_n]),
+                    .Q(dff_out[word][bit_n]),
+                    .en((en_i && we_i) || accel_mem_en)
+                );
+            end
+        end
+    endgenerate
 
     /* Write */
     always_ff @(posedge clk) begin
-        if (en_i == 1'b1) begin
-            if (we_i == 1'b1) begin                                 // Store Byte(1 byte)
-                RAM[addr_i]   <= data_i[WORD_WIDTH-1:0];
-                
-                // $display(" WRITINGGG ON RAM \n %b \n %b \n %d \n\n",
-                //     data_i, 
-                //     RAM[addr_i], 
-                //     addr_i
-                // );
+
+        if (!rst) begin
+            // Reset memory contents on reset
+            for (int i = 0; i < MEMWIDTH; i++) begin
+                dff_in[i] <= '0;
+            end
+        end 
+
+        if (accel_mem_en == 1'b1) begin                                 
+            for (int bit_w = 0; bit_w < WORDWIDTH; bit_w++) begin
+                dff_in[addr_i][bit_w] <= data_i[bit_w];  // Write bit-by-bit
             end
         end
     end
 
     /* Read */
     always_ff @(posedge clk or negedge rst) begin
-        if (rst) begin
-            data_o_a            <= 32'b0;
-            data_o_b            <= 32'b0;
-
-        end
-        if (en_i == 1'b1) begin
-            if (we_i == '0) begin
-                data_o_a[WORD_WIDTH-1:0]    <= RAM[addr_i];
-                data_o_b[WORD_WIDTH-1:0]    <= RAM[addr_i+1];
-
-                if (RAM[addr_i]=== 16'bx) begin
-                    data_o_a[WORD_WIDTH-1:0]    <= 16'b0;
-                end
-                if (RAM[addr_i+1]=== 16'bx) begin
-                    data_o_b[WORD_WIDTH-1:0]    <= 16'b0;
-                end
+        
+        if (accel_en == 1'b1) begin                 
+            int adress_int = ((addr_i-400)*2);    
+            $display(addr_i);          
+            $display(adress_int);          
+            for (int bit_w = 0; bit_w < WORDWIDTH; bit_w++) begin
+                data_o_a[bit_w] <= dff_out[addr_i][bit_w];  // Write bit-by-bit
+                data_o_b[bit_w] <= dff_out[addr_i+1][bit_w];  // Write bit-by-bit
             end
         end
+
+        if (accel_en == 1'b0) begin                               
+            data_o_a <= '0; 
+            data_o_b <= '0;
+        end         
+
     end
-
-
+    
 endmodule
+
+
+    
+
+

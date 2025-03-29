@@ -20,12 +20,13 @@ create_delay_corner -name Corner1 -timing_condition Cond1  -rc_corner QX
 create_delay_corner -name Corner2 -timing_condition Cond2 -rc_corner QX
 
 create_constraint_mode -name Functional -sdc_files ../constraints/functional.sdc
-create_constraint_mode -name Redu_clock -sdc_files ../constraints/redu_clock.sdc
+# create_constraint_mode -name Redu_clock -sdc_files ../constraints/redu_clock.sdc
 
 create_analysis_view -name AV1 -constraint_mode Functional -delay_corner Corner1
 create_analysis_view -name AV2 -constraint_mode Functional -delay_corner Corner2
-create_analysis_view -name AV3 -constraint_mode Redu_clock -delay_corner Corner1
-create_analysis_view -name AV4 -constraint_mode Redu_clock -delay_corner Corner2
+# create_analysis_view -name AV3 -constraint_mode Redu_clock -delay_corner Corner1
+# create_analysis_view -name AV4 -constraint_mode Redu_clock -delay_corner Corner2
 
-# set_analysis_view -setup AV1 AV2 AV3 AV4 -hold AV1 AV2 AV3 AV4
-set_analysis_view -setup AV4 AV2 -hold AV1 AV3 
+# set_analysis_view -setup AV4 AV2 -hold AV1 AV3 
+set_analysis_view -setup AV2 -hold AV1 
+

@@ -74,10 +74,9 @@ module execute
     output  logic               write_enable_fwd_o,
     output  iType_e             instruction_operation_o,
     output  logic   [31:0]      result_o,
-    output  logic               accel_en,
     output  logic   [31:0]      result_fwd_o,
     output  logic   [ 4:0]      rd_o,
-
+    
     output  logic [31:0]        mem_address_o,
     output  logic               mem_read_enable_o,
     output  logic  [3:0]        mem_write_enable_o,
@@ -86,7 +85,7 @@ module execute
     /* verilator lint_off UNUSEDSIGNAL */
     input   logic [31:0]        mem_read_data_i,
     /* verilator lint_on UNUSEDSIGNAL */
-
+    
     /* We only use some bits of this signal here */
     /* verilator lint_off UNUSEDSIGNAL */
     input   logic [11:0]        csr_address_i,
@@ -96,10 +95,10 @@ module execute
     output  logic               csr_write_enable_o,
     output  csrOperation_e      csr_operation_o,
     output  logic [31:0]        csr_data_o,
-
+    
     output  logic [31:0]        vtype_o,
     output  logic [31:0]        vlen_o,
-
+    
     /* Not used if BP is off */
     /* verilator lint_off UNUSEDSIGNAL */
     input   logic               bp_taken_i,
@@ -107,24 +106,29 @@ module execute
     output  logic               jump_rollback_o,
     output  logic               ctx_switch_o,
     output  logic [31:0]        ctx_switch_target_o,
-
+    
     input   logic               interrupt_pending_i,
     input   logic [31:0]        mtvec_i,
     input   logic [31:0]        mepc_i,
     input   logic [31:0]        jump_imm_target_i,
-
+    
     /* Not used without zalrsc */
     /* verilator lint_off UNUSEDSIGNAL */
     input   logic [31:0]        reservation_data_i,
     /* verilator lint_on UNUSEDSIGNAL */
-
+    
     output  logic               jump_o,
     output  logic               interrupt_ack_o,
     output  logic               machine_return_o,
     output  logic               raise_exception_o,
     output  logic [31:0]        jump_target_o,
-    output  exceptionCode_e     exception_code_o
-);
+    output  exceptionCode_e     exception_code_o,
+    
+    output  logic   [31:0]      accel_mem_address,
+    output  logic   [31:0]      accel_mem_data,
+    output  logic   [31:0]      accel_mem_en,
+    output  logic               accel_en
+    );
 
     logic [31:0]    result;
     logic           write_enable;
@@ -136,31 +140,65 @@ module execute
 // Accelerator - Butterfly 
 //////////////////////////////////////////////////////////////////////////////
 
+// Enable para salvar na ram externa
+    always_comb begin
+        unique case (instruction_operation_i)
+            // To link register. Maybe we can remove this by using the PC in decode stage
+            // SUB: begin
+            //     accel_mem_address = rs1_data_i;
+            //     accel_mem_data = second_operand_i;
+            //     accel_mem_en = '1;
+            // end
 
-always_comb begin
-    unique case (instruction_operation_i)
-        // To link register. Maybe we can remove this by using the PC in decode stage
-        ADD: begin
-            accel_en = 1'b1;
-        end
-        default:  begin 
-            accel_en = 1'b0;
-        end
-    endcase
-end
+            OR: begin
+                accel_mem_address = rs1_data_i;
+                accel_mem_data = second_operand_i;
+                accel_mem_en = '1;
+            end
+
+            FFT_MEM: begin
+                accel_mem_address = rs1_data_i;
+                accel_mem_data = second_operand_i;
+                accel_mem_en = '1;
+            end
+
+            AND: begin
+                accel_mem_address = second_operand_i;
+                accel_en = 1'b1;
+            end
+
+            
+            SRL: begin
+                accel_mem_address = second_operand_i;
+                accel_en = 1'b1;
+            end
+
+            FFT_RUN: begin
+                accel_mem_address = second_operand_i;
+                accel_en = 1'b1;
+            end
+
+            default:  begin 
+                accel_mem_address = '0;
+                accel_mem_data = '0;
+                accel_mem_en = '0;
+                accel_en = 1'b0;
+            end
+        endcase
+    end
 
 //////////////////////////////////////////////////////////////////////////////
 // ALU
 //////////////////////////////////////////////////////////////////////////////
 
-    logic [31:0]    sum_result;
-    logic [31:0]    sum2_result;
-    logic [31:0]    and_result;
-    logic [31:0]    or_result;
-    logic [31:0]    xor_result;
-    logic [31:0]    sll_result;
-    logic [31:0]    srl_result;
-    logic [31:0]    sra_result;
+    logic [31:0]   sum_result;
+    logic [31:0]   sum2_result;
+    logic [31:0]   and_result;
+    logic [31:0]   or_result;
+    logic [31:0]   xor_result;
+    logic [31:0]   sll_result;
+    logic [31:0]   srl_result;
+    logic [31:0]   sra_result;
 
     logic           equal;
     logic           less_than;

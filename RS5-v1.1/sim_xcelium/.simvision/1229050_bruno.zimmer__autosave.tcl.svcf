@@ -1,0 +1,313 @@
+
+#
+# Preferences
+#
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-SimControl-WaveWindow {
+  usual
+  position -anchor e
+}
+preferences set toolbar-txe_waveform_toggle-WaveWindow {
+  usual
+  position -pos 1
+}
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+preferences set toolbar-Windows-WaveWindow {
+  usual
+  position -pos 2
+}
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 960x993+-10+19}] != ""} {
+    window geometry "Waveform 1" 960x993+-10+19
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar visibility partial
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 175 \
+    -units ps \
+    -valuewidth 75
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.assign_out
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.clk
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.count_y[5:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.din_i[11:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.din_i_reg[23:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.din_i_wire[23:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.din_r[11:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.din_r_reg[23:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.din_r_wire[23:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.dout_i[15:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.dout_r[15:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.i
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.in_valid
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.in_valid_reg
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.next_count_y[5:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.next_dout_i[15:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.next_dout_r[15:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.next_out_valid
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.next_over
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.next_r4_valid
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.next_s5_count
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.no5_state[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.out_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.out_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.out_valid
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.over
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.r4_valid
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no1_delay_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no1_delay_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no1_op_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no1_op_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.radix_no1_outvalid
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no2_delay_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no2_delay_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no2_op_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no2_op_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.radix_no2_outvalid
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no3_delay_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no3_delay_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no3_op_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no3_op_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.radix_no3_outvalid
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no4_delay_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no4_delay_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no4_op_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no4_op_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.radix_no4_outvalid
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no5_delay_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no5_delay_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no5_op_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.radix_no5_op_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.reset
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.result_i[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.result_i_ns[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.result_r[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.result_r_ns[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom2_state[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom2_w_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom2_w_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom4_state[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom4_w_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom4_w_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom8_state[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom8_w_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom8_w_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom16_state[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom16_w_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.rom16_w_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	simulator::testbench.dut.FFT_CORE.s5_count
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_1_dout_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_1_dout_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_2_dout_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_2_dout_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_4_dout_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_4_dout_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_8_dout_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_8_dout_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_16_dout_i[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.shift_16_dout_r[23:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.y_1[4:0]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::testbench.dut.FFT_CORE.y_1_delay[4:0]}
+	} ]
+
+waveform xview limits 46411100ps 47484610ps
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 730x250+261+564
+
+#
+# Layout selection
+#
