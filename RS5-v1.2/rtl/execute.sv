@@ -124,9 +124,9 @@ module execute
     output  logic [31:0]        jump_target_o,
     output  exceptionCode_e     exception_code_o,
     
-    output  logic   [31:0]      accel_mem_address,
-    output  logic   [31:0]      accel_mem_data,
-    output  logic   [31:0]      accel_mem_en,
+    output  logic   [15:0]      accel_mem_address,
+    output  logic   [15:0]      accel_mem_data,
+    output  logic               accel_mem_en,
     output  logic               accel_en
     );
 
@@ -150,11 +150,11 @@ module execute
             //     accel_mem_en = '1;
             // end
 
-            OR: begin
-                accel_mem_address = rs1_data_i;
-                accel_mem_data = second_operand_i;
-                accel_mem_en = '1;
-            end
+            // OR: begin
+            //     accel_mem_address = rs1_data_i;
+            //     accel_mem_data = second_operand_i;
+            //     accel_mem_en = '1;
+            // end
 
             FFT_MEM: begin
                 accel_mem_address = rs1_data_i;
@@ -162,16 +162,16 @@ module execute
                 accel_mem_en = '1;
             end
 
-            AND: begin
-                accel_mem_address = second_operand_i;
-                accel_en = 1'b1;
-            end
+            // AND: begin
+            //     accel_mem_address = second_operand_i;
+            //     accel_en = 1'b1;
+            // end
 
             
-            SRL: begin
-                accel_mem_address = second_operand_i;
-                accel_en = 1'b1;
-            end
+            // SRL: begin
+            //     accel_mem_address = second_operand_i;
+            //     accel_en = 1'b1;
+            // end
 
             FFT_RUN: begin
                 accel_mem_address = second_operand_i;

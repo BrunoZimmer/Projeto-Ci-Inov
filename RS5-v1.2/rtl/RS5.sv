@@ -71,8 +71,8 @@
     output logic  [15:0]            accel_dout_i,  
     
     output logic                    accel_mem_en,
-    output logic [31:0]             accel_mem_address,
-    output logic [31:0]             accel_mem_data,
+    output logic  [15:0]            accel_mem_address,
+    output logic  [15:0]            accel_mem_data,
     output logic                    accel_en
  );
  
@@ -519,13 +519,10 @@
  
 
 
-     logic [31:0]   fft_ram_out_i;
-     logic [31:0]   fft_ram_out_r;
+     logic [15:0]   fft_ram_out_i;
+     logic [15:0]   fft_ram_out_r;
      
-     RAMFFT #(
-        .MEMWIDTH(128),
-        .WORDWIDTH(16)
-    ) RAMFFT (
+     RAMFFT RAMFFT (
         .clk            (clk),
         .rst            (reset_n),
         .accel_mem_en   (accel_mem_en),

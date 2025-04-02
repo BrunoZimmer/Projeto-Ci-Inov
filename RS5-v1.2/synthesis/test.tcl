@@ -1,8 +1,3 @@
-
-globalNetConnect VDD -type pgpin -pin VDD -instanceBasename * -verbose
-globalNetConnect VSS -type pgpin -pin VSS -instanceBasename * -verbose
-
-
 # floorplan boundary
 set ret [catch {floorplan -noResize -noSnapToGrid -b  0.0000000000 0.0000000000 556.0000000000 412.6800000000  0.0000000000 0.0000000000 556.0000000000 412.6800000000  8.0000000000 8.1700000000 548.0000000000 404.5100000000 }]
 if {$ret != 0} {
@@ -801,70 +796,3 @@ deletePinGuide -all
 # custom shape
 delete_gui_object -shape
 # coverCell
-
-
-
-globalNetConnect VDD -type pgpin -pin VDD -instanceBasename * -verbose
-globalNetConnect VSS -type pgpin -pin VSS -instanceBasename * -verbose
-
-addRing \
-  -nets {VDD VSS} \
-  -type core_rings \
-  -follow io \
-  -layer {top Metal11 bottom Metal11 left Metal10 right Metal10} \
-  -width {top 1.8 bottom 1.8 left 1.8 right 1.8} \
-  -spacing {top 1.8 bottom 1.8 left 1.8 right 1.8} \
-  -offset {top 1.8 bottom 1.8 left 1.8 right 1.8} \
-  -center 0 \
-  -threshold 0 \
-  -jog_distance 0 \
-  -snap_wire_center_to_grid None
-
-addStripe \
-  -nets {VDD VSS} \
-  -layer Metal11 \
-  -direction horizontal \
-  -width 0.9 \
-  -spacing 1.25 \
-  -set_to_set_distance 40 \
-  -start_from bottom \
-  -switch_layer_over_obs false \
-  -max_same_layer_jog_length 2 \
-  -padcore_ring_top_layer_limit Metal11 \
-  -padcore_ring_bottom_layer_limit Metal1 \
-  -block_ring_top_layer_limit Metal11 \
-  -block_ring_bottom_layer_limit Metal1 \
-  -use_wire_group 0 \
-  -snap_wire_center_to_grid None
-
-
-addStripe \
-  -nets {VDD VSS} \
-  -layer Metal10 \
-  -direction vertical \
-  -width 0.9 \
-  -spacing 1.25 \
-  -set_to_set_distance 50 \
-  -start_from bottom \
-  -switch_layer_over_obs false \
-  -max_same_layer_jog_length 2 \
-  -padcore_ring_top_layer_limit Metal10 \
-  -padcore_ring_bottom_layer_limit Metal1 \
-  -block_ring_top_layer_limit Metal10 \
-  -block_ring_bottom_layer_limit Metal1 \
-  -use_wire_group 0 \
-  -snap_wire_center_to_grid None
-
-
-
-setDesignMode -topRoutingLayer 11
-setDesignMode -bottomRoutingLayer 2
-
-snapFPlan -guide -block -stdCell -ioPad -pin -pinGuide -routeBlk -pinBlk -ptnCore -placeBlk -macroPin
-setDrawView fplan
-fit
-
-sroute
-
-# check_design -all
-# gui_fit

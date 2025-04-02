@@ -33,8 +33,8 @@ mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor or
 #
 # Waveform windows
 #
-if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1010x600+525+24}] != ""} {
-    window geometry "Waveform 1" 1010x600+525+24
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1010x600+388+19}] != ""} {
+    window geometry "Waveform 1" 1010x600+388+19
 }
 window target "Waveform 1" on
 waveform using {Waveform 1}

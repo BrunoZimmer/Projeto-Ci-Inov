@@ -8,7 +8,7 @@
 #################################################################
 
 set_db init_lib_search_path /home/ic/bruno.zimmer/FLP/gpdk045_workspace/gsclib045_all_v4.4/gsclib045/timing
-set_db init_hdl_search_path /home/ic/bruno.zimmer/Projeto/RS5-v2.2/rtl
+set_db init_hdl_search_path /home/ic/bruno.zimmer/Documents/Projeto/RS5-v2.2/rtl
 
 read_libs { fast_vdd1v0_basicCells.lib slow_vdd1v0_basicCells.lib }
 

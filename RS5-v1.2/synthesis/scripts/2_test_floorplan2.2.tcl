@@ -1786,3 +1786,88 @@ deletePinGuide -all
 # custom shape
 delete_gui_object -shape
 # coverCell
+# snapFPlan -guide -block -stdCell -ioPad -pin -pinGuide -routeBlk -pinBlk -ptnCore -placeBlk -macroPin
+# setDrawView fplan
+# fit
+
+addRing \
+  -nets {VDD VSS} \
+  -type core_rings \
+  -follow io \
+  -layer {top Metal11 bottom Metal11 left Metal10 right Metal10} \
+  -width {top 1.8 bottom 1.8 left 1.8 right 1.8} \
+  -spacing {top 1.8 bottom 1.8 left 1.8 right 1.8} \
+  -offset {top 1.8 bottom 1.8 left 1.8 right 1.8} \
+  -center 0 \
+  -threshold 0 \
+  -jog_distance 0 \
+  -snap_wire_center_to_grid None
+
+addStripe \
+  -nets {VDD VSS} \
+  -layer Metal11 \
+  -direction horizontal \
+  -width 0.9 \
+  -spacing 1.25 \
+  -set_to_set_distance 50 \
+  -start_from bottom \
+  -switch_layer_over_obs false \
+  -max_same_layer_jog_length 2 \
+  -padcore_ring_top_layer_limit Metal11 \
+  -padcore_ring_bottom_layer_limit Metal1 \
+  -block_ring_top_layer_limit Metal11 \
+  -block_ring_bottom_layer_limit Metal1 \
+  -use_wire_group 0 \
+  -snap_wire_center_to_grid None
+
+
+addStripe \
+  -nets {VDD VSS} \
+  -layer Metal10 \
+  -direction vertical \
+  -width 0.9 \
+  -spacing 1.25 \
+  -set_to_set_distance 50 \
+  -start_from bottom \
+  -switch_layer_over_obs false \
+  -max_same_layer_jog_length 2 \
+  -padcore_ring_top_layer_limit Metal10 \
+  -padcore_ring_bottom_layer_limit Metal1 \
+  -block_ring_top_layer_limit Metal10 \
+  -block_ring_bottom_layer_limit Metal1 \
+  -use_wire_group 0 \
+  -snap_wire_center_to_grid None
+
+# addStripe \
+#  -nets {VDD VSS} \
+#  -layer Metal11 \
+#  -width 0.22 \
+#  -spacing 0.4 \
+#  -number_of_sets 4 \
+#  -start 10 \
+#  -stop 60
+
+
+# addStripe \
+#  -nets {VDD VSS} \
+#  -layer Metal10 \
+#  -width 1.8 \
+#  -spacing 1.8 \
+#  -number_of_sets 4 \
+#  -start 10 \
+#  -stop 60
+
+
+setDesignMode -topRoutingLayer 11
+setDesignMode -bottomRoutingLayer 2
+
+snapFPlan -guide -block -stdCell -ioPad -pin -pinGuide -routeBlk -pinBlk -ptnCore -placeBlk -macroPin
+setDrawView fplan
+fit
+
+sroute
+
+# check_design -all
+gui_fit
+
+# write_db Save2

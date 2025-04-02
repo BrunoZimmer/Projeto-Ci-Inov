@@ -422,6 +422,10 @@
  // CPU
  //////////////////////////////////////////////////////////////////////////////
  
+
+    logic                    accel_mem_en;
+    logic  [15:0]            accel_mem_address;
+    logic  [15:0]            accel_mem_data;
     RS5 #(
          `ifndef SYNTH
              .DEBUG      (DEBUG          ),
@@ -463,8 +467,13 @@
 
             .en_i                   (enable_ram_fft_initial),
             .we_i                   (mem_write_enable_fft_initial),
-            .addr_i                 (ram_address_in_fft),
-            .data_i                 (fft_ram_in)
+            .addr_i                 (ram_address_in_fft[15:0]),
+            .data_i                 (fft_ram_in),
+
+            .accel_mem_en           (accel_mem_en),
+            .accel_mem_address      (accel_mem_address),
+            .accel_mem_data         (accel_mem_data)
+
         );
      
 

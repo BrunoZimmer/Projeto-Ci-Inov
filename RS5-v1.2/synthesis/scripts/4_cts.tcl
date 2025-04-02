@@ -1,19 +1,19 @@
 
 add_ndr \
   -name CTS_2W1S \
-  -width_multiplier {Metal1:Metal5 2.0}
+  -width_multiplier {Metal1:Metal5 1.0}
 
 create_route_type \
   -name top_rule \
   -non_default_rule CTS_2W1S \
   -top_preferred_layer Metal6 \
-  -bottom_preferred_layer Metal9
+  -bottom_preferred_layer Metal8
 
 create_route_type \
   -name trunk_rule \
   -non_default_rule CTS_2W1S \
   -top_preferred_layer Metal7 \
-  -bottom_preferred_layer Metal10
+  -bottom_preferred_layer Metal8
 
 #create_route_type \
 #  -name leaf_rule \

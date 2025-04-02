@@ -8,7 +8,7 @@
 #################################################################
 
 set_db init_lib_search_path /home/ic/bruno.zimmer/FLP/gpdk045_workspace/gsclib045_all_v4.4/gsclib045/timing
-set_db init_hdl_search_path /home/ic/bruno.zimmer/Projeto/RS5-v2.2/rtl
+set_db init_hdl_search_path /home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl
 
 read_libs { fast_vdd1v0_basicCells.lib slow_vdd1v0_basicCells.lib }
 
@@ -35,7 +35,7 @@ set OUT_FILES ${LOCAL_PATH}/results
 ###############################################################################
 set load_pdk                  1
 set tool_config               1
-set clock_gating              1
+set clock_gating              0
 set load_hdl                  1
 set elaborate                 1
 set synthesis                 1
@@ -43,7 +43,7 @@ set save_reports              1
 set write_netlist             1
 set export_innovus            1
 set verification              0
-set stop                      1
+set stop                      0
 
 
 ###############################################################################
@@ -142,26 +142,19 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 								../../rtl/vectorRegbank.sv  				\
 								../../rtl/vectorUnit.sv						\
 								../../rtl/FlipFlopD.sv						\
+								../../rtl/FFT.sv			  			    \ 
 								../../rtl/RAMFFT.sv							\
 								../../rtl/RS5.sv							\
-								../../rtl/fft_acc/adder3_n.sv				\
-								../../rtl/fft_acc/butterfly2_n.sv		 	\
-								../../rtl/fft_acc/butterfly4_n.sv		 	\ 
-								../../rtl/fft_acc/butterfly8_n.sv			\ 
-								../../rtl/fft_acc/butterfly16_n.sv			\ 
-								../../rtl/fft_acc/butterfly32_n.sv			\ 
-								../../rtl/fft_acc/clk_div.sv				\ 
-								../../rtl/fft_acc/control_unit.sv			\ 
-								../../rtl/fft_acc/fft_wrapper.sv			\ 
-								../../rtl/fft_acc/get_negative_n.sv			\ 
-								../../rtl/fft_acc/m_ram.sv					\ 
-								../../rtl/fft_acc/multiplier_n.sv			\ 
-								../../rtl/fft_acc/mux_n.sv					\ 
-								../../rtl/fft_acc/pipling_stage_n.sv		\ 
-								../../rtl/fft_acc/s_ram.sv					\	 
-								../../rtl/fft_acc/top_n.sv					\	 
-								../../rtl/fft_acc/twiddle_rom_imag_n.sv		\ 
-								../../rtl/fft_acc/twiddle_rom_real_n.sv		"
+								../../rtl/fft_acc/radix2.sv					\
+								../../rtl/fft_acc/ROM_2.sv		 			\
+								../../rtl/fft_acc/ROM_4.sv		 			\ 
+								../../rtl/fft_acc/ROM_8.sv					\ 
+								../../rtl/fft_acc/ROM_16.sv					\ 
+								../../rtl/fft_acc/shift_1.sv	 			\
+								../../rtl/fft_acc/shift_2.sv	 			\
+								../../rtl/fft_acc/shift_4.sv	 			\ 
+								../../rtl/fft_acc/shift_8.sv				\ 
+								../../rtl/fft_acc/shift_16.sv				"
 }
 
 

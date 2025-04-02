@@ -11,16 +11,16 @@
 // LastEditTime: 2021-17-18 15:16:50
 // ********************************************************************
 // Module Function
-`include "./fft_acc/shift_16.sv"
-`include "./fft_acc/shift_8.sv"
-`include "./fft_acc/shift_4.sv"
-`include "./fft_acc/shift_2.sv"
-`include "./fft_acc/shift_1.sv"
-`include "./fft_acc/radix2.sv"
-`include "./fft_acc/ROM_16.sv"
-`include "./fft_acc/ROM_8.sv"
-`include "./fft_acc/ROM_4.sv"
-`include "./fft_acc/ROM_2.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/shift_16.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/shift_8.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/shift_4.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/shift_2.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/shift_1.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/radix2.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/ROM_16.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/ROM_8.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/ROM_4.sv"
+`include "/home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl/fft_acc/ROM_2.sv"
 
 `timescale 1ns/10ps
 module FFT(
