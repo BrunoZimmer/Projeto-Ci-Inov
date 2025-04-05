@@ -8,7 +8,7 @@
 
 module RAMFFT
 #(
-    parameter int    MEMWIDTH  = 32,
+    parameter int    MEMWIDTH  = 33,
     parameter int    WORDWIDTH  = 16
 )
 (

@@ -87,6 +87,7 @@ int main() {
         "add t2, t2, s2\n\t"
         "add t3, t3, s3\n\t"
         "add t4, t4, s4\n\t"
+        "div t4, t4, s4\n\t"
         :
         :
         : "t0", "t1", "t2", "t3", "t4", "s0", "s1", "s2", "s3", "s4" // Clobbered registers

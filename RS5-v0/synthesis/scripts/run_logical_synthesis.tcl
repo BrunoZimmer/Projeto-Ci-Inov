@@ -8,7 +8,7 @@
 #################################################################
 
 set_db init_lib_search_path /home/ic/bruno.zimmer/FLP/gpdk045_workspace/gsclib045_all_v4.4/gsclib045/timing
-set_db init_hdl_search_path /home/ic/bruno.zimmer/Documents/Projeto/RS5-v1.2/rtl
+set_db init_hdl_search_path /home/ic/bruno.zimmer/Documents/Projeto/RS5-v0/rtl
 
 # read_libs { fast_vdd1v0_basicCells.lib slow_vdd1v0_basicCells.lib }
 
@@ -19,6 +19,7 @@ read_physical -lef { \
 	/home/ic/bruno.zimmer/FLP/gpdk045_workspace/gsclib045_all_v4.4/gsclib045/lef/gsclib045_macro.lef \
 }
 
+#read_netlist ./results/gate_level/RS5_logic_mapped.v
 
 ###############################################################################
 # Setup
@@ -75,9 +76,9 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 	### Tool effort, default is mediun
 	set_db syn_global_effort high
-	set_db syn_generic_effort high
-	set_db syn_map_effort high
-	set_db syn_opt_effort high
+	# set_db syn_generic_effort high
+	# set_db syn_map_effort high
+	# set_db syn_opt_effort high
 
 	### keep hierarchy
 	set_db auto_ungroup none
@@ -122,7 +123,7 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 								../../rtl/aes/riscv_crypto_sbox_aes_top.sv 	\
 								../../rtl/aes/riscv_crypto_sbox_inv_mid.sv 	\
 								../../rtl/aes/riscv_crypto_aes_fwd_sbox.sv 	\
-								../../rtl/aes/riscv_crypto_aes_sbox.sv		\					\
+								../../rtl/aes/riscv_crypto_aes_sbox.sv		\					
 								../../rtl/aes_unit.sv 						\
 								../../rtl/amo.sv 							\
 								../../rtl/CSRBank.sv 						\
@@ -142,20 +143,7 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 								../../rtl/vectorLSU.sv						\
 								../../rtl/vectorRegbank.sv  				\
 								../../rtl/vectorUnit.sv						\
-								../../rtl/FlipFlopD.sv						\
-								../../rtl/FFT.sv			  			    \ 
-								../../rtl/RAMFFT.sv							\
-								../../rtl/RS5.sv							\
-								../../rtl/fft_acc/radix2.sv					\
-								../../rtl/fft_acc/ROM_2.sv		 			\
-								../../rtl/fft_acc/ROM_4.sv		 			\ 
-								../../rtl/fft_acc/ROM_8.sv					\ 
-								../../rtl/fft_acc/ROM_16.sv					\ 
-								../../rtl/fft_acc/shift_1.sv	 			\
-								../../rtl/fft_acc/shift_2.sv	 			\
-								../../rtl/fft_acc/shift_4.sv	 			\ 
-								../../rtl/fft_acc/shift_8.sv				\ 
-								../../rtl/fft_acc/shift_16.sv				"
+								../../rtl/RS5.sv		"
 }
 
 

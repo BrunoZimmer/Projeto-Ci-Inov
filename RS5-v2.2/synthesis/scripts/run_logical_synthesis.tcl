@@ -10,13 +10,13 @@
 set_db init_lib_search_path /home/ic/bruno.zimmer/FLP/gpdk045_workspace/gsclib045_all_v4.4/gsclib045/timing
 set_db init_hdl_search_path /home/ic/bruno.zimmer/Documents/Projeto/RS5-v2.2/rtl
 
-read_libs { fast_vdd1v0_basicCells.lib slow_vdd1v0_basicCells.lib }
+# read_libs { fast_vdd1v0_basicCells.lib }
+read_mmmc ../constraints/RS5.mmmc.tcl
 
 read_physical -lef { \
 	/home/ic/bruno.zimmer/FLP/gpdk045_workspace/gsclib045_all_v4.4/gsclib045/lef/gsclib045_tech.lef \
 	/home/ic/bruno.zimmer/FLP/gpdk045_workspace/gsclib045_all_v4.4/gsclib045/lef/gsclib045_macro.lef \
 }
-
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ set OUT_FILES ${LOCAL_PATH}/results
 ###############################################################################
 # Custom FLOW
 ###############################################################################
-set load_pdk                  1
+set load_pdk                  0
 set tool_config               1
 set clock_gating              1
 set load_hdl                  1
@@ -43,7 +43,7 @@ set save_reports              1
 set write_netlist             1
 set export_innovus            1
 set verification              0
-set stop                      1
+set stop                      0
 
 
 ###############################################################################
@@ -227,25 +227,25 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 	report_power -unit mW > ${OUT_FILES}/reports/${TOP_MODULE}_power_${CURRENT_VIEW}.rpt
 
 	##################################
-	set CURRENT_VIEW AV2
-	set_analysis_view -setup ${CURRENT_VIEW}  -hold ${CURRENT_VIEW}
-	report_timing > ${OUT_FILES}/reports/${TOP_MODULE}_timing_setup_${CURRENT_VIEW}.rpt
-	#---
-	report_power -unit mW > ${OUT_FILES}/reports/${TOP_MODULE}_power_${CURRENT_VIEW}.rpt
+	# set CURRENT_VIEW AV2
+	# set_analysis_view -setup ${CURRENT_VIEW}  -hold ${CURRENT_VIEW}
+	# report_timing > ${OUT_FILES}/reports/${TOP_MODULE}_timing_setup_${CURRENT_VIEW}.rpt
+	# #---
+	# report_power -unit mW > ${OUT_FILES}/reports/${TOP_MODULE}_power_${CURRENT_VIEW}.rpt
 
-	# ###################################
-	set CURRENT_VIEW AV3
-	set_analysis_view -setup ${CURRENT_VIEW}  -hold ${CURRENT_VIEW}
-	report_timing > ${OUT_FILES}/reports/${TOP_MODULE}_timing_setup_${CURRENT_VIEW}.rpt
-	#---
-	report_power -unit mW > ${OUT_FILES}/reports/${TOP_MODULE}_power_${CURRENT_VIEW}.rpt
+	# # ###################################
+	# set CURRENT_VIEW AV3
+	# set_analysis_view -setup ${CURRENT_VIEW}  -hold ${CURRENT_VIEW}
+	# report_timing > ${OUT_FILES}/reports/${TOP_MODULE}_timing_setup_${CURRENT_VIEW}.rpt
+	# #---
+	# report_power -unit mW > ${OUT_FILES}/reports/${TOP_MODULE}_power_${CURRENT_VIEW}.rpt
 
-	# ###################################
-	set CURRENT_VIEW AV4
-	set_analysis_view -setup ${CURRENT_VIEW}  -hold ${CURRENT_VIEW}
-	report_timing > ${OUT_FILES}/reports/${TOP_MODULE}_timing_setup_${CURRENT_VIEW}.rpt
-	#---
-	report_power -unit mW > ${OUT_FILES}/reports/${TOP_MODULE}_power_${CURRENT_VIEW}.rpt
+	# # ###################################
+	# set CURRENT_VIEW AV4
+	# set_analysis_view -setup ${CURRENT_VIEW}  -hold ${CURRENT_VIEW}
+	# report_timing > ${OUT_FILES}/reports/${TOP_MODULE}_timing_setup_${CURRENT_VIEW}.rpt
+	# #---
+	# report_power -unit mW > ${OUT_FILES}/reports/${TOP_MODULE}_power_${CURRENT_VIEW}.rpt
 
 
 	### Report timming -unconstrained amd -verbose
@@ -268,19 +268,19 @@ puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 	write_sdf > ${OUT_FILES}/gate_level/${TOP_MODULE}_${CURRENT_VIEW}.sdf
 
 	## worst setup
-	set CURRENT_VIEW AV2
-	set_analysis_view -setup ${CURRENT_VIEW} -hold ${CURRENT_VIEW}
-	write_sdf > ${OUT_FILES}/gate_level/${TOP_MODULE}_${CURRENT_VIEW}.sdf
+	# set CURRENT_VIEW AV2
+	# set_analysis_view -setup ${CURRENT_VIEW} -hold ${CURRENT_VIEW}
+	# write_sdf > ${OUT_FILES}/gate_level/${TOP_MODULE}_${CURRENT_VIEW}.sdf
 
-	## worst hold
-	set CURRENT_VIEW AV3
-	set_analysis_view -setup ${CURRENT_VIEW} -hold ${CURRENT_VIEW}
-	write_sdf > ${OUT_FILES}/gate_level/${TOP_MODULE}_${CURRENT_VIEW}.sdf
+	# ## worst hold
+	# set CURRENT_VIEW AV3
+	# set_analysis_view -setup ${CURRENT_VIEW} -hold ${CURRENT_VIEW}
+	# write_sdf > ${OUT_FILES}/gate_level/${TOP_MODULE}_${CURRENT_VIEW}.sdf
 
-	## worst hold
-	set CURRENT_VIEW AV4
-	set_analysis_view -setup ${CURRENT_VIEW} -hold ${CURRENT_VIEW}
-	write_sdf > ${OUT_FILES}/gate_level/${TOP_MODULE}_${CURRENT_VIEW}.sdf
+	# ## worst hold
+	# set CURRENT_VIEW AV4
+	# set_analysis_view -setup ${CURRENT_VIEW} -hold ${CURRENT_VIEW}
+	# write_sdf > ${OUT_FILES}/gate_level/${TOP_MODULE}_${CURRENT_VIEW}.sdf
 
 }
 
@@ -291,8 +291,9 @@ puts "Export design to Innovus"
 puts "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
 	# ### default view
-	set_analysis_view -setup AV4 AV2 -hold AV1 AV3 
+	# set_analysis_view -setup AV4 AV2 -hold AV1 AV3 
 
+	set_analysis_view -setup AV1 -hold AV1 
 
 	### To generate all files needed to be loaded in an Innovus session, use the following command:
 

@@ -57,8 +57,7 @@
     output logic  [3:0]             mem_write_enable_o,
     output logic [31:0]             mem_address_o,
     output logic [31:0]             mem_data_o,
-    output logic                    interrupt_ack_o,
-    output  logic                   accel_en
+    output logic                    interrupt_ack_o
  );
  
  //////////////////////////////////////////////////////////////////////////////
@@ -389,8 +388,7 @@
          .interrupt_ack_o         (interrupt_ack_o),
          .machine_return_o        (MACHINE_RETURN),
          .raise_exception_o       (RAISE_EXCEPTION),
-         .exception_code_o        (Exception_Code),
-         .accel_en                (accel_en)
+         .exception_code_o        (Exception_Code)
      );
  
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -3,18 +3,17 @@
 # ---------------------------------------------------------
 # Define the primary clock
 # ---------------------------------------------------------
+set_load_unit -femtofarads
+set_time_unit -nanoseconds
 
 # Define clock "clk" with a period of 4 ns (250 MHz)
-create_clock -name clk -period 4.0 [get_ports clk]
+create_clock -name clk -period 2.0 [get_ports clk]
 
 # ---------------------------------------------------------
-# Set input delays
+# Set clock uncertainty
 # ---------------------------------------------------------
-
-# Set input delay relative to the rising edge of the clock
-# Assume external delay of 2 ns for inputs a, b, and acc_in
-set_input_delay -clock clk -max 2.0 [get_ports {a b acc_in}]
-set_input_delay -clock clk -min 0.5 [get_ports {a b acc_in}]
+set_input_delay -clock clk -max 2.0 [all_inputs]
+set_input_delay -clock clk -min 0.5 [all_inputs]
 
 # ---------------------------------------------------------
 # Set output delays
@@ -22,58 +21,27 @@ set_input_delay -clock clk -min 0.5 [get_ports {a b acc_in}]
 
 # Set output delay relative to the rising edge of the clock
 # Assume external delay of 1.5 ns for acc_out
-set_output_delay -clock clk -max 1.5 [get_ports acc_out]
-set_output_delay -clock clk -min 0.5 [get_ports acc_out]
+set_input_delay -clock clk -max 0.6 [all_inputs]
+set_input_delay -clock clk -min 0.2 [all_inputs]
 
 # ---------------------------------------------------------
-# Define timing exceptions
+# Set output delays
 # ---------------------------------------------------------
 
-# Set false path between registers if needed (example path)
-# set_false_path -from [get_cells register_a] -to [get_cells register_b]
+# Set output delay relative to the rising edge of the clock
+# Assume external delay of 1.5 ns for acc_out
+set_output_delay -clock clk -max 0.5 [all_outputs]
+set_output_delay -clock clk -min 0.15 [all_outputs]
 
-# Set multicycle paths (e.g., if multiplication takes multiple cycles)
-# Example: multiplication takes 2 cycles
-#set_multicycle_path 2 -from [get_cells mul_stage1_reg] -to [get_cells mul_stage2_reg]
+### Ignoring the time analysis for the Reset
+set_false_path -from [get_ports {reset_n}]
 
-# ---------------------------------------------------------
-# Specify I/O delay uncertainty
-# ---------------------------------------------------------
+set_clock_latency -source 0.06 {clk}
 
-# Add uncertainty for input and output delays (e.g., due to jitter or process variations)
-set_input_delay -clock clk -max 2.2 [get_ports {a b acc_in}]
-set_output_delay -clock clk -max 1.7 [get_ports acc_out]
+### INPUTS
+set_input_transition 0.1 [all_inputs]
+set_max_fanout 1 [all_inputs]
 
-# ---------------------------------------------------------
-# Set clock uncertainty
-# ---------------------------------------------------------
-
-# Define clock uncertainty (e.g., clock jitter)
-set_clock_uncertainty -setup 0.2 [get_clocks clk]
-set_clock_uncertainty -hold 0.1 [get_clocks clk]
-
-# ---------------------------------------------------------
-# Specify max delay for critical paths
-# ---------------------------------------------------------
-
-# Set maximum delay (e.g., critical path must not exceed 8 ns)
-set_max_delay 8.0 -from [get_ports {a b acc_in}] -to [get_ports acc_out]
-
-# ---------------------------------------------------------
-# Specify input and output transition times
-# ---------------------------------------------------------
-
-# Set input transition times (slew rate at input ports)
-set_input_transition 1.0 [get_ports {a b acc_in}]
-
-# Set output transition times (slew rate at output ports)
-set_load 0.05 [get_ports acc_out] 
-
-# ---------------------------------------------------------
-# Define clock groups
-# ---------------------------------------------------------
-
-# If there are multiple clocks, define them as mutually exclusive
-# Example: asynchronous clock domains clk1 and clk2
-# set_clock_groups -asynchronous -group {clk1} -group {clk2}
-
+### OUTPUTS
+# set_load 1000 [all_outputs]
+set_load 5 [all_outputs]
