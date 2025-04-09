@@ -1782,6 +1782,8 @@ unplaceAllBlocks
 deleteHaloFromBlock -allBlock
 # Global Net Connection
 clearGlobalNets 
+globalNetConnect  VDD -type pgpin -pin VDD 
+globalNetConnect  VSS -type pgpin -pin VSS  
 applyGlobalNets 
 # busSinkGroup
 # blackbox
@@ -1796,6 +1798,8 @@ delete_gui_object -shape
 
 
 
+
+floorPlan -site CoreSite -r 1.4155 0.876116 8.0 8.17 8.0 8.17
 
 addRing \
   -nets {VDD VSS} \

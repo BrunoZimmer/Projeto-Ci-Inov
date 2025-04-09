@@ -36,7 +36,7 @@ globalNetConnect  VSS -type pgpin -pin VSS
 #  -routingHaloTopLayer 11 \
 #  -routingHaloBottomLayer 1
 
-floorPlan -adjustToSite -su 1 0.7 5.0 5.0 5.0 5.0
+floorPlan -adjustToSite -su 1 0.93 5.0 5.0 5.0 5.0
 
 #addIoFiller -cell {padIORINGFEED1 padIORINGFEED3 padIORINGFEED5 padIORINGFEED10 padIORINGFEED60}
 

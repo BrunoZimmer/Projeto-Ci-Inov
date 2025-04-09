@@ -8,7 +8,7 @@ set init_gnd_net {VSS}
 set TOP_MODULE RS5
 set LOCAL_PATH [pwd]
 
-set OUT_FILES ${LOCAL_PATH}/../genus_2ns_indelay/results
+set OUT_FILES ${LOCAL_PATH}/../genus_2ns_clock/results
 # set OUT_FILES /home/ic/bruno.zimmer/Documents/Projeto/RS5-v0/synthesis/genus_old/results
 
 
