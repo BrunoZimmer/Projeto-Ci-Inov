@@ -46,7 +46,7 @@ This project integrates two 32-point FFT (Fast Fourier Transform) hardware accel
 │
 ├── Makefile
 └── README.md
-
+```
 ---
 
 # ⚙️ Running the Project
@@ -56,6 +56,7 @@ This project integrates two 32-point FFT (Fast Fourier Transform) hardware accel
 - GPDK 45nm standard cell libraries
 
 ## Simulation
+```
 # Example: simulate serial FFT on RS5-v1.2
 #make software binary for Risc-V
 cd RS5-v1.2/app/test
@@ -78,3 +79,39 @@ mkdir innovus
 cd innovus
 innovus 
 source ../scripts/innovus_legacy_script.tcl
+```
+
+## 🚀 Key Features
+- **Custom Instructions**: FFT_RUN and FFT_MEM allow accelerator triggering and memory interfacing.
+- **Accelerators**:
+    - Serial FFT (Radix-2 DIF)
+    - Parallel FFT (16 MAC units, time-shared)
+- **Register Bank**: 64x16-bit memory with dual I/O for complex FFT data
+- **Pipeline Independence**: Accelerators execute independently of RS5 pipeline
+- **Performance**: Parallel FFT achieves ≈2000× speedup with 5-cycle compute time
+
+## 📊 Summary of Results
+
+| Configuration         | Cycles  | Area (µm²) | Power (mW) | Speedup  |
+|------------------------|---------|-------------|--------------|-----------|
+| RS5 (SW FFT)           | 188,180 | 35,379      | 10.5         | 1×        |
+| RS5 + Serial FFT       | 192     | 102,668     | 24.5*        | ~960×     |
+| RS5 + Parallel FFT     | 99      | 185,796     | 20.7*        | ~1863×    |
+
+> * Power values are based on physical synthesis results with clock gating enabled.
+
+## 🛠️ Future Improvements
+- **Unified Register Management**: Share register bank between processor and accelerators
+- **Accelerator-to-Pipeline Integration**: Feed FFT results directly into pipeline for concurrent execution
+- **Support for Larger FFT Sizes**: Expand to 64-point or 128-point FFT variants
+
+## 🧑‍💻 Authors
+**Bruno S. Zimmer** – bruno.zimmer@ufrgs.br
+
+**Pedro T. L. Pereira** – ptlpereira@inf.ufrgs.br
+
+**Raphael M. Brum** – brum@ufrgs.br
+
+## 📄 License
+This project is part of the CI-Inovador initiative and supported by MCTI and SOFTEX. It is intended for academic and research purposes.
+
